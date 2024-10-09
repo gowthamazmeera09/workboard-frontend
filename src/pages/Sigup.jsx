@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { API_URL } from '../data/data';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [username,setUserName] = useState("");
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [phonenumber,setPhoneNumber] = useState("");
+  const Navigate = useNavigate();
 
   const handlesubmit = async(e)=>{
     e.preventDefault();
@@ -28,7 +30,7 @@ function Signup() {
       const data = await response.json();
       if(response.ok){
         console.log(data);
-        alert("registation successfull")
+        Navigate('/Verificationpage')
       }
       else if(email){
         alert("email already taken");

@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Sigup from './pages/Sigup';
 import Sigin from './pages/Sigin';
+import VerificationPage from './pages/VerificationPage';
 const router = createBrowserRouter([
   {
     path:"/",
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path:"/Sigin",
         element:<Sigin />
+      },
+      {
+        path:"/Verificationpage",
+        element:<VerificationPage />
       }
     ]
   }
