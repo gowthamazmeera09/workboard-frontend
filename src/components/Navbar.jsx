@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
   const [avatar, setAvatar] = useState('');
@@ -39,24 +40,14 @@ const Navbar = () => {
         <div className="flex items-center">
           {/* Hamburger Icon for mobile */}
           <div className="lg:hidden">
-            <button
+          <button
               onClick={toggleMenu}
               className="text-white focus:outline-none"
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isMenuOpen}
+              aria-controls="sidebar"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d={isMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
-                />
-              </svg>
+              {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
           </div>
 
