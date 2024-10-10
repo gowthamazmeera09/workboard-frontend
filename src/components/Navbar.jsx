@@ -58,7 +58,7 @@ const Navbar = () => {
         </div>
 
         {/* Profile dropdown */}
-        <div ref={profileRef} className="relative">
+        <div ref={profileRef} className="relative ">
           <button
             onClick={toggleProfile}
             className="text-white flex items-center focus:outline-none"
@@ -127,12 +127,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* Main Content */}
-        <div className="flex-1 p-4 lg:ml-64">
-          {/* Add your main page content here */}
-          <h1 className="text-3xl font-bold">Welcome to WorkBoard</h1>
-          <p>This is your main content area.</p>
-        </div>
+        
       </div>
     </>
   );
