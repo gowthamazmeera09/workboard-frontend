@@ -101,7 +101,7 @@ const Navbar = () => {
           ref={menuRef}
           className={`${
             isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-          } fixed lg:relative top-0 left-0 w-64 h-full bg-slate-800 text-white p-4 transform transition-transform lg:translate-x-0 lg:flex lg:w-64 lg:h-auto lg:p-0 lg:bg-gray-800 lg:mt-4 z-50`}
+          } fixed lg:relative top-[-16px] left-0 w-64 h-full bg-slate-800 text-white p-4 transform transition-transform lg:translate-x-0 lg:flex lg:w-64 lg:h-auto lg:p-0 lg:bg-gray-800 lg:mt-4 z-50`}
         >
           <ul className="space-y-4 lg:flex lg:flex-col">
             <li>
