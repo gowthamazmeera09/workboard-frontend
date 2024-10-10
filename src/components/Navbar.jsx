@@ -70,8 +70,8 @@ const Navbar = () => {
                                 </Link>
                             ) : (
                                 <span>
-                                    <Link to="/Sigup" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">Signup</Link> /
-                                    <Link to="/Sigin" className="text-sm text-blue-600 dark:text-blue-500 hover:underline">Login</Link>
+                                    <Link to="/Sigup" className="text-sm text-white dark:text-blue-500 hover:underline">Sigup/</Link>
+                                    <Link to="/Sigin" className="text-sm text-white dark:text-blue-500 hover:underline">Login</Link>
                                 </span>
                             )}
                         </div>

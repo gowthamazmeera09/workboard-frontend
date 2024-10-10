@@ -10,11 +10,16 @@ import {
 import Sigup from './pages/Sigup';
 import Sigin from './pages/Sigin';
 import VerificationPage from './pages/VerificationPage';
+import LandingHome from './pages/LandingHome';
 const router = createBrowserRouter([
   {
     path:"/",
     element:<App />,
     children:[
+      {
+        path:"/",
+        element:<LandingHome />
+      },
       {
         path:"/Sigup",
         element:<Sigup />
