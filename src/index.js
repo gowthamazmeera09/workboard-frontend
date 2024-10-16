@@ -11,6 +11,8 @@ import Sigup from './pages/Sigup';
 import Sigin from './pages/Sigin';
 import VerificationPage from './pages/VerificationPage';
 import LandingHome from './pages/LandingHome';
+import Images from './pages/images';
+
 const router = createBrowserRouter([
   {
     path:"/",
@@ -31,6 +33,10 @@ const router = createBrowserRouter([
       {
         path:"/Verificationpage",
         element:<VerificationPage />
+      },
+      {
+        path:"/Images",
+        element:<Images />
       }
     ]
   }
