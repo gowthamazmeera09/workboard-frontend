@@ -11,7 +11,9 @@ import Sigup from './pages/Sigup';
 import Sigin from './pages/Sigin';
 import VerificationPage from './pages/VerificationPage';
 import LandingHome from './pages/LandingHome';
-import Images from './pages/Images';
+import Profile from './pages/Profile';
+import Logout from './pages/Logout';
+
 
 
 
@@ -38,8 +40,14 @@ const router = createBrowserRouter([
         element:<VerificationPage />
       },
       {
-        path:"/Images",
-        element:<Images />
+        path:"/Profile",
+        element:<Profile />,
+        children:[
+          {
+            path:"/Profile/Logout",
+            element:<Logout />
+          }
+        ]
       }
     ]
   }

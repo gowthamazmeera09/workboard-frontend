@@ -9,6 +9,15 @@ const Navbar = () => {
   const menuRef = useRef(null);
   const profileRef = useRef(null);
 
+
+  
+  useEffect(() => {
+    const storedProfilePicture = localStorage.getItem('profilePicture');
+    if (storedProfilePicture) {
+      setAvatar(storedProfilePicture);
+    }
+  }, []);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -65,9 +74,9 @@ const Navbar = () => {
           >
             <div className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
                             {avatar ? (
-                                <Link to="/Profile">
+                                
                                     <img src={avatar} alt="Profile" className="h-10 w-10 object-cover rounded-full" />
-                                </Link>
+                                
                             ) : (
                                 <span>
                                     <Link to="/Sigup" className="text-sm text-white dark:text-blue-500 hover:underline">Sigup/</Link>
@@ -85,7 +94,7 @@ const Navbar = () => {
     <Link to="/settings" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
       Settings
     </Link>
-    <Link to="/logout" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+    <Link to="/Logout" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
       Logout
     </Link>
   </div>

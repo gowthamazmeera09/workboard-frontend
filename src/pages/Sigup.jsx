@@ -7,25 +7,26 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phonenumber, setPhoneNumber] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
   const Navigate = useNavigate();
 
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
-      const formData = {
-        username,
-        email,
-        password,
-        phonenumber
-      };
+      const formData = new FormData();
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('phonenumber', phonenumber);
+        if (selectedFile) {
+            formData.append('profilePicture', selectedFile); // Use 'profilePicture' as the field name
+        }
 
-      const response = await fetch(`${API_URL}user/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+        
+        const response = await fetch(`${API_URL}user/register`,{
+            method: 'POST',
+            body: formData // No need for 'Content-Type' header when using FormData
+        });
 
       const data = await response.json();
       if (response.ok) {
@@ -72,8 +73,12 @@ function Signup() {
         <label htmlFor="phonenumber" className="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Phone Number</label>
         <input type="number" name='phonenumber' value={phonenumber} onChange={(e) => setPhoneNumber(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-60 mx-16 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="970*******" required />
       </div>
+      <div className="mb-5">
+        <label htmlFor="profilePicture" className="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Profile Picture</label>
+        <input type="file" name="profilePicture" accept="image/*" onChange={(e) => setSelectedFile(e.target.files[0])}  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-60 mx-16 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+      </div>
       <div className='mb-5'>
-      <label for="password" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Already hava an account!
+      <label for="" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Already hava an account!
         <Link to="/Sigin" className="text-sm text-blue-800  dark:text-blue-500 hover:underline"> Login</Link>
         </label>
       

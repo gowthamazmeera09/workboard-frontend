@@ -5,7 +5,7 @@ import { API_URL } from '../data/data';
 function Sigin() {
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
-  const Navigate = useNavigate("");
+  const Navigate = useNavigate();
 
   const handlesubmit = async(e)=>{
     e.preventDefault();
@@ -20,8 +20,13 @@ function Sigin() {
       const data = await responce.json();
       if(responce.ok){
         alert("Login successfull");
+        localStorage.setItem('loginToken', data.token);
+        localStorage.setItem('userId', data.userId);
+        localStorage.setItem('profilePicture', data.profilePicture || '');
         console.log(data);
-        Navigate('/Images')
+        window.location.reload('/Navbar')
+        
+        
       }
       
     } catch (error) {
