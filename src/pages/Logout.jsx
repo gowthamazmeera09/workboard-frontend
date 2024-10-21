@@ -9,7 +9,7 @@ function Logout() {
             // Remove items from localStorage
             localStorage.removeItem('loginToken');
             localStorage.removeItem('userId');
-            localStorage.removeItem('profilePicture');
+            localStorage.removeItem('imageUrl');
             
             // Redirect to login page or home page after logout
             window.location.href = '/Sigin'; 

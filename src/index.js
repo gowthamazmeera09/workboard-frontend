@@ -13,6 +13,12 @@ import VerificationPage from './pages/VerificationPage';
 import LandingHome from './pages/LandingHome';
 import Profile from './pages/Profile';
 import Logout from './pages/Logout';
+import Home from './pages/Home';
+import About from './pages/About';
+import Services from './pages/Services';
+import Contact from './pages/Contact';
+
+
 
 
 
@@ -26,6 +32,22 @@ const router = createBrowserRouter([
       {
         path:"/",
         element:<LandingHome />
+      },
+      {
+        path:"/Home",
+        element:<Home />
+      },
+      {
+        path:"/About",
+        element:<About />
+      },
+      {
+        path:"/Services",
+        element:<Services />
+      },
+      {
+        path:"/Contact",
+        element:<Contact />
       },
       {
         path:"/Sigup",

@@ -20,11 +20,12 @@ function Sigin() {
       const data = await responce.json();
       if(responce.ok){
         alert("Login successfull");
+        Navigate('/Home');
         localStorage.setItem('loginToken', data.token);
         localStorage.setItem('userId', data.userId);
-        localStorage.setItem('profilePicture', data.profilePicture || '');
+        localStorage.setItem('imageUrl',data.imageUrl)
         console.log(data);
-        window.location.reload('/Navbar')
+        window.location.reload('/Navbar');
         
         
       }

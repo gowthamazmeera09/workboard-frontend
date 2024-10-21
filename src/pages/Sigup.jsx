@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { API_URL } from '../data/data';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Signup() {
   const [username, setUserName] = useState("");
@@ -8,25 +9,24 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [phonenumber, setPhoneNumber] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  // const [images, setImages] = useState([]);
   const Navigate = useNavigate();
 
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
       const formData = new FormData();
-        formData.append('username', username);
-        formData.append('email', email);
-        formData.append('password', password);
-        formData.append('phonenumber', phonenumber);
-        if (selectedFile) {
-            formData.append('profilePicture', selectedFile); // Use 'profilePicture' as the field name
-        }
+      formData.append('username', username);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('phonenumber', phonenumber);
+      formData.append('image', selectedFile);
 
         
-        const response = await fetch(`${API_URL}user/register`,{
-            method: 'POST',
-            body: formData // No need for 'Content-Type' header when using FormData
-        });
+      const response = await fetch(`${API_URL}user/register`,{
+        method:'POST',
+        body:formData
+      });
 
       const data = await response.json();
       if (response.ok) {
@@ -73,10 +73,11 @@ function Signup() {
         <label htmlFor="phonenumber" className="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Phone Number</label>
         <input type="number" name='phonenumber' value={phonenumber} onChange={(e) => setPhoneNumber(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-60 mx-16 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="970*******" required />
       </div>
-      <div className="mb-5">
-        <label htmlFor="profilePicture" className="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Profile Picture</label>
-        <input type="file" name="profilePicture" accept="image/*" onChange={(e) => setSelectedFile(e.target.files[0])}  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-60 mx-16 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+      <div class="mb-5">
+        <label for="image" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Your email</label>
+        <input type="file"   onChange={(e)=>setSelectedFile(e.target.files[0])}  class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required />
       </div>
+      
       <div className='mb-5'>
       <label for="" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Already hava an account!
         <Link to="/Sigin" className="text-sm text-blue-800  dark:text-blue-500 hover:underline"> Login</Link>

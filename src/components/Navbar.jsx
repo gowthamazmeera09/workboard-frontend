@@ -9,10 +9,8 @@ const Navbar = () => {
   const menuRef = useRef(null);
   const profileRef = useRef(null);
 
-
-  
   useEffect(() => {
-    const storedProfilePicture = localStorage.getItem('profilePicture');
+    const storedProfilePicture = localStorage.getItem('imageUrl');
     if (storedProfilePicture) {
       setAvatar(storedProfilePicture);
     }
@@ -42,6 +40,14 @@ const Navbar = () => {
     };
   }, []);
 
+  const handleMenuLinkClick = () => {
+    setIsMenuOpen(false);
+  };
+
+  const handleProfileLinkClick = () => {
+    setIsProfileOpen(false);
+  };
+
   return (
     <>
       {/* Top Navbar */}
@@ -49,7 +55,7 @@ const Navbar = () => {
         <div className="flex items-center">
           {/* Hamburger Icon for mobile */}
           <div className="lg:hidden">
-          <button
+            <button
               onClick={toggleMenu}
               className="text-white focus:outline-none"
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
@@ -67,39 +73,33 @@ const Navbar = () => {
         </div>
 
         {/* Profile dropdown */}
-        <div ref={profileRef} className="relative ">
+        <div ref={profileRef} className="relative">
           <button
             onClick={toggleProfile}
             className="text-white flex items-center focus:outline-none"
           >
             <div className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
-                            {avatar ? (
-                                
-                                    <img src={avatar} alt="Profile" className="h-10 w-10 object-cover rounded-full" />
-                                
-                            ) : (
-                                <span>
-                                    <Link to="/Sigup" className="text-sm text-white dark:text-blue-500 hover:underline">Sigup/</Link>
-                                    <Link to="/Sigin" className="text-sm text-white dark:text-blue-500 hover:underline">Login</Link>
-                                </span>
-                            )}
-                        </div>
+              {avatar ? (
+                <img src={avatar} alt="Profile" className="h-10 w-10 object-cover rounded-full" />
+              ) : (
+                <span>
+                  <Link to="/Signup" className="text-sm text-white dark:text-blue-500 hover:underline">Signup/</Link>
+                  <Link to="/Signin" className="text-sm text-white dark:text-blue-500 hover:underline">Login</Link>
+                </span>
+              )}
+            </div>
           </button>
 
           {avatar && isProfileOpen && (
-  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
-    <Link to="/profile" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-      Profile
-    </Link>
-    <Link to="/settings" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-      Settings
-    </Link>
-    <Link to="/Logout" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-      Logout
-    </Link>
-  </div>
-)}
-
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
+              <Link to="/profile" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={handleProfileLinkClick}>
+                Profile
+              </Link>
+              <Link to="/settings" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={handleProfileLinkClick}>
+                Settings
+              </Link>
+            </div>
+          )}
         </div>
       </nav>
 
@@ -114,29 +114,27 @@ const Navbar = () => {
         >
           <ul className="space-y-4 lg:flex lg:flex-col">
             <li>
-              <a href="#home" className="block px-2 py-1 lg:py-2">
+              <Link to="/Home" className="block px-2 py-1 lg:py-2" onClick={handleMenuLinkClick}>
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#about" className="block px-2 py-1 lg:py-2">
+              <Link to="/About" className="block px-2 py-1 lg:py-2" onClick={handleMenuLinkClick}>
                 About
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#services" className="block px-2 py-1 lg:py-2">
+              <Link to="/Services" className="block px-2 py-1 lg:py-2" onClick={handleMenuLinkClick}>
                 Services
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#contact" className="block px-2 py-1 lg:py-2">
+              <Link to="/Contact" className="block px-2 py-1 lg:py-2" onClick={handleMenuLinkClick}>
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
-
-        
       </div>
     </>
   );
