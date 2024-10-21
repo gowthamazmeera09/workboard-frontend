@@ -79,8 +79,8 @@ function Signup() {
       </div>
       
       <div className='mb-5'>
-      <label for="password" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Don't hava an account?
-        <Link to="/Sigup" className="text-sm text-blue-800  dark:text-blue-500 hover:underline"> Register here</Link>
+      <label for="password" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Already hava an account?
+        <Link to="/Sigin" className="text-sm text-blue-800  dark:text-blue-500 hover:underline"> Login here</Link>
         </label>
       
       </div>

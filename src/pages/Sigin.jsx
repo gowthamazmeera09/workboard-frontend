@@ -86,7 +86,7 @@ function Sigin() {
         <div className="mb-5">
           <label htmlFor="register" className="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">
             Don't have an account?
-            <Link to="/Signup" className="text-sm text-blue-800 dark:text-blue-500 hover:underline ml-1">
+            <Link to="/Sigup" className="text-sm text-blue-800 dark:text-blue-500 hover:underline ml-1">
               Register here
             </Link>
           </label>
