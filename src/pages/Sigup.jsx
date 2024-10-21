@@ -23,9 +23,9 @@ function Signup() {
       formData.append('image', selectedFile);
 
         
-      const response = await fetch(`${API_URL}user/register`,{
-        method:'POST',
-        body:formData
+      const response = await fetch(`${API_URL}user/register`, {
+        method: 'POST',
+        body: formData
       });
 
       const data = await response.json();
