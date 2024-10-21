@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
@@ -8,7 +8,9 @@ const Navbar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const menuRef = useRef(null);
   const profileRef = useRef(null);
+  const navigate = useNavigate();
 
+  // Fetch avatar from localStorage when the component mounts
   useEffect(() => {
     const storedProfilePicture = localStorage.getItem('imageUrl');
     if (storedProfilePicture) {
@@ -48,6 +50,15 @@ const Navbar = () => {
     setIsProfileOpen(false);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('loginToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('imageUrl');
+    setAvatar('');
+    setIsProfileOpen(false);
+    navigate('/Sigin');
+  };
+
   return (
     <>
       {/* Top Navbar */}
@@ -78,26 +89,40 @@ const Navbar = () => {
             onClick={toggleProfile}
             className="text-white flex items-center focus:outline-none"
           >
-            <div className="text-sm text-blue-600 dark:text-blue-500 hover:underline">
-              {avatar ? (
-                <img src={avatar} alt="Profile" className="h-10 w-10 object-cover rounded-full" />
-              ) : (
-                <span>
-                  <Link to="/Signup" className="text-sm text-white dark:text-blue-500 hover:underline">Signup/</Link>
-                  <Link to="/Signin" className="text-sm text-white dark:text-blue-500 hover:underline">Login</Link>
-                </span>
-              )}
-            </div>
+            {avatar ? (
+              <img src={avatar} alt="Profile" className="h-10 w-10 object-cover rounded-full" />
+            ) : (
+              <span className="text-sm">
+                <Link to="/Sigup" className="text-white dark:text-blue-500 hover:underline mr-2">Signup</Link>
+                /
+                <Link to="/Sigin" className="text-white dark:text-blue-500 hover:underline ml-2">Login</Link>
+              </span>
+            )}
           </button>
 
+          {/* Dropdown Menu */}
           {avatar && isProfileOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
-              <Link to="/profile" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={handleProfileLinkClick}>
+              <Link
+                to="/profile"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                onClick={handleProfileLinkClick}
+              >
                 Profile
               </Link>
-              <Link to="/settings" className="block px-4 py-2 text-gray-700 hover:bg-gray-100" onClick={handleProfileLinkClick}>
+              <Link
+                to="/settings"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                onClick={handleProfileLinkClick}
+              >
                 Settings
               </Link>
+              <button
+                onClick={handleLogout}
+                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+              >
+                Logout
+              </button>
             </div>
           )}
         </div>

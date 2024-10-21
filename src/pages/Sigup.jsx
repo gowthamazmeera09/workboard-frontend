@@ -1,91 +1,141 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { API_URL } from '../data/data';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+
 
 function Signup() {
-  const [username, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phonenumber, setPhoneNumber] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
-  // const [images, setImages] = useState([]);
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    phonenumber: '',
+  });
+  const [image, setImage] = useState(null);
+  const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
   const Navigate = useNavigate();
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  const handlesubmit = async (e) => {
+  // Handle image file input change
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  // Submit form
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append('username', username);
-      formData.append('email', email);
-      formData.append('password', password);
-      formData.append('phonenumber', phonenumber);
-      formData.append('image', selectedFile);
 
-        
-      const response = await fetch(`${API_URL}user/register`, {
-        method: 'POST',
-        body: formData
+    // Prepare form data for sending
+    const form = new FormData();
+    form.append('username', formData.username);
+    form.append('email', formData.email);
+    form.append('password', formData.password);
+    form.append('phonenumber', formData.phonenumber);
+    form.append('image', image);
+
+    try {
+      const response = await axios.post(`${API_URL}user/register`, form, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      const data = await response.json();
-      if (response.ok) {
-        console.log(data);
-        Navigate('/Verificationpage');
-      } else if (email) {
-        alert("Email already taken");
-        setUserName("");
-        setEmail("");
-        setPassword("");
-      } else if (phonenumber) {
-        alert("Phone number is already taken");
-        setUserName("");
-        setEmail("");
-        setPassword("");
-      } else {
-        setUserName("");
-        setEmail("");
-        setPassword("");
-      }
-
-    } catch (error) {
-      console.log(error);
-      alert("Something went wrong");
+      setSuccess(response.data.success);
+      Navigate('/Verificationpage')
+      setError('');
+    } catch (err) {
+      setError(err.response?.data?.error || 'Something went wrong');
+      setSuccess('');
     }
-  }
-
+  };
   return (
-    <form className=" max-w-md  mx-auto mt-20 lg:mt-[-100px]  " onSubmit={handlesubmit}>
-
-      <div className="mb-5">
-        <label htmlFor="username" className="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Username</label>
-        <input type="text" name='username' value={username} onChange={(e) => setUserName(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-60 mx-16 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Username" required />
-      </div>
-      <div className="mb-5">
-        <label htmlFor="email" className="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Your email</label>
-        <input type="email" name='email' value={email} onChange={(e) => setEmail(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-60 mx-16 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required />
-      </div>
-      <div className="mb-5">
-        <label htmlFor="password" className="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Create a password</label>
-        <input type="password" name='password' value={password} onChange={(e) => setPassword(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-60 mx-16 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-      </div>
-      <div className="mb-5">
-        <label htmlFor="phonenumber" className="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Phone Number</label>
-        <input type="number" name='phonenumber' value={phonenumber} onChange={(e) => setPhoneNumber(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-60 mx-16 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="970*******" required />
+    <div>
+    {success && <div style={{ color: 'green' }}>{success}</div>}
+    {error && <div style={{ color: 'red' }}>{error}</div>}
+    <form class="max-w-sm mx-auto mt-20 lg:mt-[-120px]" onSubmit={handleSubmit}>
+    <div class="mb-5">
+        <label for="username" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">username</label>
+        <input type="text" name='username' value={formData.username} onChange={handleChange}  class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required />
       </div>
       <div class="mb-5">
-        <label for="image" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Your email</label>
-        <input type="file"   onChange={(e)=>setSelectedFile(e.target.files[0])}  class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required />
+        <label for="email" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Your email</label>
+        <input type="email" name='email' value={formData.email} onChange={handleChange}  class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required />
+      </div>
+      <div class="mb-5">
+        <label for="password" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">create a password</label>
+        <input type="password" name='password' value={formData.password} onChange={handleChange}  class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+      </div>
+      <div class="mb-5">
+        <label for="phonenumber" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">your phonenumber</label>
+        <input type="number" name='phonenumber' value={formData.phonenumber}  onChange={handleChange} class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+      </div>
+      <div class="mb-5">
+        <label for="image" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">your phonenumber</label>
+        <input type="file"    onChange={handleImageChange} class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
       </div>
       
       <div className='mb-5'>
-      <label for="" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Already hava an account!
-        <Link to="/Sigin" className="text-sm text-blue-800  dark:text-blue-500 hover:underline"> Login</Link>
+      <label for="password" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Don't hava an account?
+        <Link to="/Sigup" className="text-sm text-blue-800  dark:text-blue-500 hover:underline"> Register here</Link>
         </label>
       
       </div>
-      <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 mx-16 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-small sm:w-auto px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register</button>
+      
+
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 mx-16 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-small sm:w-auto px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
     </form>
+    {/* <form onSubmit={handleSubmit}>
+      <div>
+        <label>Username:</label>
+        <input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Email:</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Password:</label>
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Phone Number:</label>
+        <input
+          type="text"
+          name="phonenumber"
+          value={formData.phonenumber}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Profile Image:</label>
+        <input type="file" onChange={handleImageChange} />
+      </div>
+      <button type="submit">Register</button>
+    </form> */}
+  </div>
   );
 }
 
