@@ -32,7 +32,7 @@ function VerificationPage({ email }) {
   const handleSubmit = async (finalCode) => {
     try {
       setIsSubmitting(true);
-      const response = await fetch(`${API_URL}user/verify`, {
+      const response = await fetch(`${API_URL}/user/verify`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ function VerificationPage({ email }) {
   // Resend verification code logic
   const resendCode = async () => {
     try {
-      const response = await fetch(`${API_URL}user/resendVerificationCode`, {
+      const response = await fetch(`${API_URL}/user/resendVerificationCode`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

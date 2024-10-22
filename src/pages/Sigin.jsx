@@ -12,7 +12,7 @@ function Sigin() {
     e.preventDefault();
     
     try {
-      const response = await fetch(`${API_URL}user/login`, {
+      const response = await fetch(`${API_URL}/user/login`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'
