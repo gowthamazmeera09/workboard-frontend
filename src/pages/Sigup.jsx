@@ -4,7 +4,7 @@ import { API_URL } from '../data/data';
 import { Link, useNavigate } from 'react-router-dom';
 
 
-function Signup() {
+function Sigup() {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -47,8 +47,8 @@ function Signup() {
       setSuccess(response.data.success);
       Navigate('/Verificationpage')
       setError('');
-    } catch (err) {
-      setError(err.response?.data?.error || 'Something went wrong');
+    } catch (error) {
+      console.error(error)
       setSuccess('');
     }
   };
@@ -86,57 +86,10 @@ function Signup() {
       </div>
       
 
-      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 mx-16 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-small sm:w-auto px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 mx-16 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-small sm:w-auto px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register</button>
     </form>
-    {/* <form onSubmit={handleSubmit}>
-      <div>
-        <label>Username:</label>
-        <input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Phone Number:</label>
-        <input
-          type="text"
-          name="phonenumber"
-          value={formData.phonenumber}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Profile Image:</label>
-        <input type="file" onChange={handleImageChange} />
-      </div>
-      <button type="submit">Register</button>
-    </form> */}
   </div>
   );
 }
 
-export default Signup;
+export default Sigup;
