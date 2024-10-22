@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { API_URL } from '../data/data';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -9,7 +8,7 @@ function Sigup() {
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [phonenumber,setPhonenumber] = useState("");
-  const [image,setImage] = useState(null);
+  
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
   const Navigate = useNavigate();
@@ -26,7 +25,7 @@ function Sigup() {
     form.append('email', email);
     form.append('password', password);
     form.append('phonenumber', phonenumber);
-    form.append('image', image);
+    
 
     try {
       const response = await fetch(`${API_URL}user/register`, {
@@ -53,7 +52,7 @@ function Sigup() {
       }
     } catch (error) {
       console.error(error)
-      setSuccess('');
+      setError(true);
     }
   };
   return (
@@ -77,10 +76,7 @@ function Sigup() {
         <label for="phonenumber" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">your phonenumber</label>
         <input type="number" name='phonenumber' value={phonenumber}  onChange={(e)=>setPhonenumber(e.target.value)} class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
       </div>
-      <div class="mb-5">
-        <label for="image" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">profile image</label>
-        <input type="file"   onChange={(e)=>setImage(e.target.files[0])} onClick={(e)=>setImage(e.target.files[0])} class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-      </div>
+      
       
       <div className='mb-5'>
       <label for="password" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Already hava an account?
