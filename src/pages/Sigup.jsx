@@ -74,8 +74,8 @@ function Signup() {
         <input type="number" name='phonenumber' value={formData.phonenumber}  onChange={handleChange} class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
       </div>
       <div class="mb-5">
-        <label for="image" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">your phonenumber</label>
-        <input type="file" name='image'  onChange={handleImageChange} class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+        <label for="image" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">profile image</label>
+        <input type="file"   onChange={handleImageChange} class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
       </div>
       
       <div className='mb-5'>
