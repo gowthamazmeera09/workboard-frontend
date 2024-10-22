@@ -47,7 +47,7 @@ function Sigup() {
       setSuccess(response.data.success);
       Navigate('/Verificationpage')
       setError('');
-    } catch (error) {
+    } catch (err) {
       console.error(error)
       setSuccess('');
     }
