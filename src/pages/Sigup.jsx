@@ -40,7 +40,7 @@ function Sigup() {
     form.append('image', image);
 
     try {
-      const response = await axios.post(`${API_URL}user/register`, form, {
+      const response = await axios.post(`${API_URL}/user/register`, form, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
