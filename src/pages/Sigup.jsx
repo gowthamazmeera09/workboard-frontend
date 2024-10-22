@@ -19,19 +19,15 @@ function Sigup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare form data for sending
-    const form = new FormData();
-    form.append('username', username);
-    form.append('email', email);
-    form.append('password', password);
-    form.append('phonenumber', phonenumber);
     
 
     try {
       const response = await fetch(`${API_URL}user/register`, {
         method:'POST',
-        body: form
+        body: JSON.stringify({username,email,password,phonenumber})
       });
+
+      const data = await response.json();
 
       if(response.ok){
         alert("registation successfull");
