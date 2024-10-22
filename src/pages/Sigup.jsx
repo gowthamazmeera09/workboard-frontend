@@ -29,7 +29,7 @@ function Sigup() {
     form.append('image', image);
 
     try {
-      const response = await fetch(`${API_URL}/user/register`, {
+      const response = await fetch(`${API_URL}user/register`, {
         method:'POST',
         body: form
       });
