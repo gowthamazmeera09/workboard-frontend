@@ -20,9 +20,9 @@ function Home() {
   }, [userId]);
 
   return (
-    <div>
+    <div >
       {user ? (
-        <h1>Welcome, {user.user.username}!</h1> // Display user name if user data is available
+        <h1 className='block mt-60  mx-32'>Welcome, {user.user.username}!</h1> // Display user name if user data is available
       ) : (
         <p>Loading user data...</p> // Show loading message if user data is not yet available
       )}
