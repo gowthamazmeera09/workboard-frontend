@@ -32,9 +32,9 @@ function Home() {
       <img src={welcomeimage} width='400px' className="welcome-image" />
       </div>
       {user ? (
-        <h1 className='block mt-10 font-serif text-3xl mx-16 lg:mx-[600px]'>Welcome,{user.user.username}!</h1> // Display user name if user data is available
+        <h1 className='block mt-10 font-serif text-3xl mx-12 lg:mx-[650px]'>Welcome,{user.user.username}!</h1> // Display user name if user data is available
       ) : (
-        <p>Loading user data...</p> // Show loading message if user data is not yet available
+        <p className='mx-16 lg:mx-[650px]'>Loading user data...</p> // Show loading message if user data is not yet available
       )}
     </div>
   );
