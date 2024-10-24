@@ -24,6 +24,9 @@ function Sigup() {
     try {
       const response = await fetch(`${API_URL}user/register`, {
         method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
         body: JSON.stringify({username,email,password,phonenumber})
       });
 
@@ -32,7 +35,7 @@ function Sigup() {
       if(response.ok){
         alert("registation successfull");
         Navigate('/Verificationpage');
-        console.log(response.data)
+        console.log(data)
         setSuccess(response.success)
       }
       else if(email){
