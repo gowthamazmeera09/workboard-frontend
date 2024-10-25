@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import welcomeimage from '../images/workboard-main-image-removebg.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { API_URL } from '../data/data';
@@ -9,6 +9,16 @@ function LandingHome() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState('');
   const Navigate = useNavigate();
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    const loginToken = localStorage.getItem('loginToken');
+    
+    if (userId && loginToken) {
+      // Redirect to home if userId and loginToken are found
+      Navigate('/Home');
+    }
+  }, [Navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

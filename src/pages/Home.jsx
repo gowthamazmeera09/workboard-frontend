@@ -27,7 +27,8 @@ function Home() {
   }, [userId]);
 
   return (
-    <div >
+    <div>
+      <div >
       <div className='lg:mt-[-100px] lg:mx-[650px]'>
       <img src={welcomeimage} width='400px' className="welcome-image" />
       </div>
@@ -36,6 +37,7 @@ function Home() {
       ) : (
         <p className='mx-16 lg:mx-[650px]'>Loading user data...</p> // Show loading message if user data is not yet available
       )}
+    </div>
     </div>
   );
 }
