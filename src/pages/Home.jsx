@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { API_URL } from '../data/data';
 import welcomeimage from '../images/worker-welcome-removebg-preview.png';
 import {  useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
+
 
 function Home() {
   const [user, setUser] = useState(null); // Initialize as null to check loading state
@@ -29,7 +31,7 @@ function Home() {
   return (
     <div>
       <div >
-      <div className='lg:mt-[-100px] lg:mx-[650px]'>
+      <div className='lg:mt-[-300px] lg:mx-[650px]'>
       <img src={welcomeimage} width='400px' className="welcome-image" />
       </div>
       {user ? (
@@ -37,6 +39,9 @@ function Home() {
       ) : (
         <p className='mx-16 lg:mx-[650px]'>Loading user data...</p> // Show loading message if user data is not yet available
       )}
+    </div>
+    <div>
+      <Footer />
     </div>
     </div>
   );

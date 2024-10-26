@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import {  useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 function About() {
   const userId = localStorage.getItem('userId');
@@ -12,9 +13,10 @@ function About() {
     }
   },[])
   return (
-    
-
-    <div>About</div>
+    <div>
+      <div>About</div>
+      <div><Footer /></div>
+    </div>
   )
 }
 

@@ -17,6 +17,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
+import Footer from './components/Footer';
+
 
 
 
@@ -36,6 +38,10 @@ const router = createBrowserRouter([
       {
         path:"/Home",
         element:<Home />
+      },
+      {
+        path:"/Footer",
+        element:<Footer />
       },
       {
         path:"/About",
