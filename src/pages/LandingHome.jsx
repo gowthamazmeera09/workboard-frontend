@@ -61,7 +61,7 @@ function LandingHome() {
   };
   return (
     <div>
-      <div className="flex items-center justify-center my-20 lg:mt-[-100px]">
+      <div className="flex items-center justify-center my-20 lg:mt-[-300px]">
         <img src={welcomeimage} width='400px' className="welcome-image" />
         <div className='hidden lg:block'>
           <form class="max-w-sm mx-auto mt-20 lg:mt-[-40px]" onSubmit={handleSubmit}>

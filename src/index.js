@@ -18,6 +18,7 @@ import About from './pages/About';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
 import Footer from './components/Footer';
+import AddWorkForm from './pages/AddWorkForm';
 
 
 
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path:"/Contact",
         element:<Contact />
+      },
+      {
+        path:"/AddWorkForm",
+        element:<AddWorkForm />
       },
       {
         path:"/Sigup",

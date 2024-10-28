@@ -49,7 +49,7 @@ function Sigin() {
   };
 
   return (
-    <div className="max-w-sm mx-auto mt-20 lg:mt-[-40px]">
+    <div className="max-w-sm mx-auto mt-20 lg:mt-[-200px]">
       <form onSubmit={handleSubmit}>
         <div className="mb-5">
           <label htmlFor="email" className="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">

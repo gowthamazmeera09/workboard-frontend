@@ -58,7 +58,7 @@ function Sigup() {
     <div>
     {success && <div style={{ color: 'green' }}>{success}</div>}
     {error && <div style={{ color: 'red' }}>{error}</div>}
-    <form class="max-w-sm mx-auto mt-20 lg:mt-[-120px]" onSubmit={handleSubmit}>
+    <form class="max-w-sm mx-auto mt-20 lg:mt-[-250px]" onSubmit={handleSubmit}>
     <div class="mb-5">
         <label for="username" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">username</label>
         <input type="text" name='username' value={username} onChange={(e)=>setUsername(e.target.value)}  class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required />

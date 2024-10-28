@@ -87,7 +87,7 @@ function VerificationPage({ email }) {
   }, [resendTimer]);
 
   return (
-    <div className="max-w-md mx-auto p-4">
+    <div className="max-w-md mx-auto p-4 lg:mt-[-200px]">
       <h2 className="text-xl font-bold mb-4">Verify Your Email</h2>
       <p className="mb-4">Enter the 6-digit code sent to your email.</p>
       
