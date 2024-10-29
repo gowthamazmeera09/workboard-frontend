@@ -104,7 +104,7 @@ function LandingHome() {
       <div className='mt-[-85px] lg:hidden'>
           <p className='text-3xl'>Hello,<br></br>How is your day</p>
           <br/>
-          <p>Please continue to <Link to="/Sigin" className="text-sm text-blue-800  dark:text-blue-500 hover:underline"> Login</Link></p>
+          <p>Please continue to <Link to="/Sigin" className="text-sm text-blue-800  dark:text-blue-500 hover:underline">Login</Link></p>
         </div>
 
 
