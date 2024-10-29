@@ -68,7 +68,7 @@ function Sigin() {
         
         <div className="mb-5">
           <label htmlFor="password" className="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">
-            Your password
+             Your password
           </label>
           <input
             type="password"
