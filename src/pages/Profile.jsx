@@ -4,7 +4,7 @@ import Logout from './Logout';
 function Profile() {
     const [avatar,setAvatar] = useState("");
   useEffect(()=>{
-    const storedProfilePicture = localStorage.getItem('profilePicture');
+    const storedProfilePicture = localStorage.getItem('photo');
     if (storedProfilePicture) {
       setAvatar(storedProfilePicture);
     }
