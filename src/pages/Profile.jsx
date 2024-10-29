@@ -14,6 +14,7 @@ function Profile() {
     <h1 className="text-2xl font-semibold mb-6">Your Profile</h1>
 
 {/* Show the profile picture if it exists */}
+
 {avatar ? (
 <img 
   src={avatar} 
