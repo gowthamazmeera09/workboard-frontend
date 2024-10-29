@@ -28,7 +28,7 @@ function Sigin() {
         // Save login details in localStorage
         localStorage.setItem('loginToken', data.token);
         localStorage.setItem('userId', data.userId);
-        localStorage.setItem('imageUrl', data.imageUrl);
+        localStorage.setItem('imageUrl', data.photo);
         
         // Navigate to the Home page
         Navigate('/Home');
