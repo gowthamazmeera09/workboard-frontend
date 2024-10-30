@@ -6,17 +6,26 @@ function AddWorkForm() {
     const [workname, setWorkName] = useState("");
     const [experience, setExperience] = useState("");
     const [location, setLocation] = useState("");
+    const [file, setFile] = useState(null);
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
     const Navigate = useNavigate("");
 
     const handlesubmit = async (e) => {
         e.preventDefault();
+        const formData = new FormData();
+        formData.append('workname', workname);
+        formData.append('experience', experience);
+        formData.append('location', location);
+        if (file) {
+            Array.from(file).forEach((f) => formData.append('photos', f));
+        }
+
         try {
             const Token = localStorage.getItem('loginToken');
             const userId = localStorage.getItem('userId');
 
-            if(!Token || !userId){
+            if (!Token || !userId) {
                 alert("user not authenticated");
                 Navigate('/Sigin')
 
@@ -25,26 +34,28 @@ function AddWorkForm() {
             const response = await fetch(`${API_URL}work/workadding`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Token':`${Token}`
+                    'Token': `${Token}`
                 },
-                body: JSON.stringify({ workname, experience, location })
+                body: formData,
             });
 
             const data = await response.json();
 
             if (response.ok) {
+                alert("work added successfully");
                 setWorkName("");
                 setExperience("");
                 setLocation("");
+                setFile(null);
                 console.log(data)
-                alert("work added successfully");
                 setSuccess(response.success)
             }
             else {
                 setWorkName("");
                 setExperience("");
                 setLocation("");
+                setFile(null);
+                alert("work is not added")
             }
 
         } catch (error) {
@@ -69,6 +80,10 @@ function AddWorkForm() {
                 <div class="mb-5">
                     <label for="location" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">location</label>
                     <input type="location" name='location' value={location} onChange={(e) => setLocation(e.target.value)} class="bg-gray-50 border border-gray-300 mx-16 text-gray-900 text-sm rounded-lg  w-60 focus:ring-blue-500 focus:border-blue-500 block w-medium lg:w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                </div>
+                <div class="mb-5">
+                    <label htmlFor="photos" class="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">Upload Photo</label>
+                    <input type="file" name="photos" multiple onChange={(e) => setFile(e.target.files)} class="mx-16" />
                 </div>
                 <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 mx-16 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-small sm:w-auto px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
             </form>
