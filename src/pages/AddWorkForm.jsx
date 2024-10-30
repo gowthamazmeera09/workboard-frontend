@@ -66,15 +66,15 @@ function AddWorkForm() {
                 <form className="max-w-sm mx-auto mt-20" onSubmit={handlesubmit}>
                     <div className="mb-5">
                         <label htmlFor="workname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Workname</label>
-                        <input type="text" name="workname" value={workname} onChange={(e) => setWorkName(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" placeholder="Software" required />
+                        <input type="text" name="workname" value={workname} onChange={(e) => setWorkName(e.target.value)} className="bg-gray-50 border h-8 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" placeholder="Software" required />
                     </div>
                     <div className="mb-5">
                         <label htmlFor="experience" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Experience</label>
-                        <input type="number" name="experience" value={experience} onChange={(e) => setExperience(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" placeholder="6" required />
+                        <input type="number" name="experience" value={experience} onChange={(e) => setExperience(e.target.value)} className="bg-gray-50 border h-8 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" placeholder="6" required />
                     </div>
                     <div className="mb-5">
                         <label htmlFor="location" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Location</label>
-                        <input type="text" name="location" value={location} onChange={(e) => setLocation(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" required />
+                        <input type="text" name="location" value={location} onChange={(e) => setLocation(e.target.value)} className="bg-gray-50 border h-8 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" required />
                     </div>
                     <div className="mb-5">
                         <label htmlFor="photos" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Upload Photo</label>
