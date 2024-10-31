@@ -19,6 +19,7 @@ import Services from './pages/Services';
 import Contact from './pages/Contact';
 import Footer from './components/Footer';
 import AddWorkForm from './pages/AddWorkForm';
+import Totalworks from './pages/Totalworks';
 
 
 
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path:"/AddWorkForm",
         element:<AddWorkForm />
+      },
+      {
+        path:"/Totalworks",
+        element:<Totalworks />
       },
       {
         path:"/Sigup",

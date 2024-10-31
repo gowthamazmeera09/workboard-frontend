@@ -13,7 +13,7 @@ function Footer() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/Home" className='mr-10 lg:mr-96' >
+                        <Link to="/Totalworks" className='mr-10 lg:mr-96' >
                         Total Works
                         </Link>
                     </li>
