@@ -45,13 +45,15 @@ function AddWorkForm() {
         Navigate('/Signin');
       }
 
-      const response = await fetch(`${API_URL}work/workadding`, {
+      const response = await fetch(`${API_URL}work/workadding/${userId}`, {
         method: 'POST',
         headers: {
           'Token': `${Token}`
         },
         body: formData,
       });
+
+      
 
       const data = await response.json();
 
@@ -122,14 +124,14 @@ function AddWorkForm() {
             <label htmlFor="vehicletype" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">VehicleType</label>
             <select name="vehicletype" value={vehicletype} onChange={(e) => setVehicleType(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" required>
               <option value="">select</option>
-              <select value="bike">Bike</select>
-              <select value="scooty">Scooty</select>
-              <select value="appiauto">Appi Auto</select>
-              <select value="5-seat-car">5 seat-car</select>
-              <select value="7-seat-car">7 seat-car</select>
-              <select value="tractor">Tractor</select>
-              <select value="bus">Bus</select>
-              <select value="lorry">Lorry</select>
+              <option value="scooty">Scooty</option>
+              <option value="bike">Bike</option>
+              <option value="appiauto">Appi Auto</option>
+              <option value="5-seat-car">5 seat-car</option>
+              <option value="7-seat-car">7 seat-car</option>
+              <option value="tractor">Tractor</option>
+              <option value="bus">Bus</option>
+              <option value="lorry">Lorry</option>
             </select>
           </div>
             </>
