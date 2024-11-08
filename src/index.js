@@ -20,12 +20,7 @@ import Contact from './pages/Contact';
 import Footer from './components/Footer';
 import AddWorkForm from './pages/AddWorkForm';
 import Totalworks from './pages/Totalworks';
-
-
-
-
-
-
+import Buttons from './pages/Buttons'
 
 
 const router = createBrowserRouter([
@@ -40,6 +35,10 @@ const router = createBrowserRouter([
       {
         path:"/Home",
         element:<Home />
+      },
+      {
+        path:"/Buttons",
+        element:<Buttons />
       },
       {
         path:"/Footer",

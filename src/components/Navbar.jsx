@@ -53,7 +53,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-slate-500 p-4 flex items-center justify-between">
+      <nav className="bg-slate-500 p-4 flex items-center justify-between bg-sticky">
         <div className="flex items-center">
           <div className="lg:hidden">
             <button

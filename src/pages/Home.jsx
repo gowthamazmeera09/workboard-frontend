@@ -2,9 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { API_URL } from '../data/data';
 import welcomeimage from '../images/worker-welcome-removebg-preview.png';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
-
+import Buttons from '../pages/Buttons'
 
 function Home() {
   const [user, setUser] = useState(null); // Initialize as null to check loading state
@@ -13,8 +13,8 @@ function Home() {
 
   useEffect(() => {
     if(!userId){
-      alert("user not found")
-      Navigate('/')
+      alert("user not found");
+      Navigate('/');
     }
     if (userId) { // Check if userId exists
       axios.get(`${API_URL}user/single-user/${userId}`)
@@ -29,20 +29,29 @@ function Home() {
   }, [userId]);
 
   return (
-    <div>
-      <div >
-      <div className='lg:mt-[-300px] lg:mx-[650px]'>
-      <img src={welcomeimage} width='400px' className="welcome-image" />
+    <div className="relative">
+      {/* Fixed Background Image */}
+      <div className="fixed top-16 left-0 right-0 z-10 bg-white">
+        <div className="mx-auto mt-10">
+          <img src={welcomeimage} width="300px" className="welcome-image mx-auto" />
+        </div>
+        {user ? (
+          <h1 className="mt-4 font-serif text-3xl text-center">
+            Welcome, {user.user.username}!
+          </h1> 
+        ) : (
+          <p className="text-center">Loading user data...</p>
+        )}
       </div>
-      {user ? (
-        <h1 className='block mt-10 font-serif text-3xl mx-12 lg:mx-[650px]'>Welcome,{user.user.username}!</h1> // Display user name if user data is available
-      ) : (
-        <p className='mx-16 lg:mx-[650px]'>Loading user data...</p> // Show loading message if user data is not yet available
-      )}
-    </div>
-    <div>
-      <Footer />
-    </div>
+
+      {/* Scrollable Content */}
+      <div className="mt-[400px] lg:m-[350px] bg-gray-300 rounded-3xl  relative z-20">
+        <Buttons />
+      </div>
+
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 }

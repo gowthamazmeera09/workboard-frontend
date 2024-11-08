@@ -61,21 +61,6 @@ function Totalworks() {
                                 <td className="border border-gray-300 px-4 py-2">{work.subject || 'N/A'}</td>
                                 <td className="border border-gray-300 px-4 py-2">{work.vehicletype || 'N/A'}</td>
                                 <td className="border border-gray-300 px-4 py-2">{work.paintertype || 'N/A'}</td>
-                                <td className="border border-gray-300 px-4 py-2">
-                                    {work.photos && work.photos.length > 0 ? (
-                                        work.photos.map((image, imgIndex) => (
-                                            <img
-                                                key={imgIndex}
-                                                src={`${API_URL}uploads/${image}`} // Adjust path if necessary
-                                                alt={`work-${index}-${imgIndex}`}
-                                                className="h-16 w-16 object-cover mr-2 inline-block"
-                                                onError={(e) => e.target.src = '/default-image.jpg'} // Placeholder for failed loads
-                                            />
-                                        ))
-                                    ) : (
-                                        'No images available'
-                                    )}
-                                </td>
                             </tr>
                         ))}
                     </tbody>
