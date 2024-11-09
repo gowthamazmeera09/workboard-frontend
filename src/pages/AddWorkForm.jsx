@@ -32,7 +32,7 @@ function AddWorkForm() {
     formData.append("experience", experience);
     formData.append("location", location);
     formData.append("file", file);
-    
+
     if (role === "teacher") {
       formData.append("standard", standard);
       formData.append("subject", subject);
@@ -68,9 +68,7 @@ function AddWorkForm() {
             name='role'
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
-            required
-          >
+            className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" required>
             <option value="">Select</option>
             <option value="teacher">Teacher</option>
             <option value="driver">Driver</option>
@@ -83,14 +81,20 @@ function AddWorkForm() {
           <>
             <div className='mb-5'>
               <label htmlFor='standard' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Standard</label>
-              <input
-                type="text"
-                id="standard"
-                value={standard}
-                onChange={(e) => setStandard(e.target.value)}
-                className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
-                required
-              />
+              <select value={standard} onClick={(e) => setStandard(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
+                <option value="">Select</option>
+                <option value="1st">1st</option>
+                <option value="2nd">2nd</option>
+                <option value="3rd">3rd</option>
+                <option value="4th">4th</option>
+                <option value="5th">5th</option>
+                <option value="6th">6th</option>
+                <option value="7th">7th</option>
+                <option value="8th">8th</option>
+                <option value="9th">9th</option>
+                <option value="10th">10th</option>
+                <option value="All">All</option>
+              </select>
             </div>
             <div className='mb-5'>
               <label htmlFor='subject' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Subject</label>
