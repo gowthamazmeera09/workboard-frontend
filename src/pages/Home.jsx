@@ -12,7 +12,7 @@ function Home() {
   const Navigate = useNavigate();
 
   useEffect(() => {
-    if(!userId){
+    if (!userId) {
       alert("user not found");
       Navigate('/');
     }
@@ -38,14 +38,16 @@ function Home() {
         {user ? (
           <h1 className="mt-4 font-serif text-3xl text-center">
             Welcome, {user.user.username}!
-          </h1> 
+          </h1>
         ) : (
           <p className="text-center">Loading user data...</p>
         )}
       </div>
-
       {/* Scrollable Content */}
-      <div className="mt-[400px] lg:m-[350px] bg-gray-300 rounded-3xl  relative z-20">
+      <div className="mt-[400px] lg:m-[50px] bg-white border border-gray-400 rounded-3xl  relative z-20">
+        <div>
+          <hr className='h-1 w-20 bg-gray-500 mx-auto mt-6' />
+        </div>
         <Buttons />
       </div>
 
