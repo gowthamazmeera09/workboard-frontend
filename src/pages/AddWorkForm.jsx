@@ -11,6 +11,8 @@ function AddWorkForm() {
   const [subject, setSubject] = useState("");
   const [vehicleType, setVehicleType] = useState("");
   const [painterType, setPainterType] = useState("");
+  const [weldingtype, setWeldingType] = useState("");
+  const [marbultype, setMarbulType] = useState("");
   const [file, setFile] = useState(null);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
@@ -40,6 +42,12 @@ function AddWorkForm() {
       formData.append("vehicleType", vehicleType);
     } else if (role === "painter") {
       formData.append("painterType", painterType);
+    }
+    else if (role === 'marbul') {
+      formData.append('marbultype', marbultype);
+    }
+    else if (role === 'welder') {
+      formData.append('weldingtype', weldingtype)
     }
 
     try {
@@ -73,6 +81,8 @@ function AddWorkForm() {
             <option value="teacher">Teacher</option>
             <option value="driver">Driver</option>
             <option value="painter">Painter</option>
+            <option value="marbul">Marbul</option>
+            <option value="welder">Welder</option>
           </select>
         </div>
 
@@ -113,28 +123,57 @@ function AddWorkForm() {
         {role === 'driver' && (
           <div className='mb-5'>
             <label htmlFor='vehicleType' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Vehicle Type</label>
-            <input
-              type="text"
-              id="vehicleType"
-              value={vehicleType}
-              onChange={(e) => setVehicleType(e.target.value)}
-              className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
-              required
-            />
+            <select value={vehicleType} onClick={(e) => setVehicleType(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
+              <option value="">Select</option>
+              <option value="bike">Bike</option>
+              <option value="scooty">Scooty</option>
+              <option value="auto">Auto</option>
+              <option value="appiauto">AppiAuto</option>
+              <option value="5-seat-car">5 seat-car</option>
+              <option value="7-seat-car">7 seat-car</option>
+              <option value="tractor">Tractor</option>
+              <option value="bus">Bus</option>
+              <option value="lorry">Lorry</option>
+            </select>
           </div>
         )}
 
         {role === 'painter' && (
           <div className='mb-5'>
             <label htmlFor='painterType' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Painter Type</label>
-            <input
-              type="text"
-              id="painterType"
-              value={painterType}
-              onChange={(e) => setPainterType(e.target.value)}
-              className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
-              required
-            />
+            <select value={painterType} onClick={(e) => setPainterType(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
+              <option value="">Select</option>
+              <option value="interier">Interier</option>
+              <option value="exterier">Exterier</option>
+              <option value="drawing">Drawing</option>
+              <option value="furniture">Furniture</option>
+              <option value="others">Others</option>
+            </select>
+          </div>
+        )}
+        {role === 'marbul' && (
+          <div className='mb-5'>
+            <label htmlFor='marbultype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Painter Type</label>
+            <select value={marbultype} onClick={(e) => setMarbulType(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
+              <option value="">Select</option>
+              <option value="marbul">Marbul</option>
+              <option value="tiles">Tiles</option>
+              <option value="granite">Granite</option>
+              <option value="hardwood">Hardwood</option>
+              <option value="stone">Stone</option>
+            </select>
+          </div>
+        )}
+
+        {role === 'welder' && (
+          <div className='mb-5'>
+            <label htmlFor='weldingtype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Painter Type</label>
+            <select value={weldingtype} onClick={(e) => setWeldingType(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
+              <option value="">Select</option>
+              <option value="fabrication">Fabrication</option>
+              <option value="gaswelding">Gaswelding</option>
+              <option value="arcwelding">Arcwelding</option>
+            </select>
           </div>
         )}
 
