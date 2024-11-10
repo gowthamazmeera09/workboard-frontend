@@ -83,6 +83,10 @@ function AddWorkForm() {
             <option value="painter">Painter</option>
             <option value="marbul">Marbul</option>
             <option value="welder">Welder</option>
+            <option value="mason">mason</option>
+            <option value="plumber">Plumber</option>
+            <option value="electrician">Electrician</option>
+            <option value="carpenter">Carpenter</option>
           </select>
         </div>
 
