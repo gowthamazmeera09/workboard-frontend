@@ -17,7 +17,7 @@ function Buttons() {
     <div className="flex justify-center">
       <div className="flex flex-wrap gap-10 max-w-[500px] justify-center mt-20 mb-20">
         <Link to="/AddWorkForm" state={{ role: 'mason' }}>
-          <img src={mason} width="150px"alt="meson" />
+          <img src={mason} width="150px"alt="mason" />
         </Link>
         <Link to="/AddWorkForm" state={{ role: 'carpenter' }}>
           <img src={carpenter} width="130px" alt="carpenter" />
@@ -26,13 +26,13 @@ function Buttons() {
           <img src={painter} width="150px" alt="Painter" />
         </Link>
         <Link to="/AddWorkForm" state={{ role: 'plumber' }}>
-          <img src={plumber} width="150px" alt="Teacher" />
+          <img src={plumber} width="150px" alt="plumber" />
         </Link>
         <Link to="/AddWorkForm" state={{ role: 'electrician' }}>
-          <img src={electrician} width="150px" alt="Driver" />
+          <img src={electrician} width="150px" alt="electrician" />
         </Link>
         <Link to="/AddWorkForm" state={{ role: 'welder' }}>
-          <img src={welder} width="150px" alt="Painter" />
+          <img src={welder} width="150px" alt="welder" />
         </Link>
         <Link to="/AddWorkForm" state={{ role: 'teacher' }}>
           <img src={ACtechnician} width="150px" alt="Teacher" />
