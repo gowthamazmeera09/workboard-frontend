@@ -10,16 +10,16 @@ function Totalworks() {
 
     const getalldata = async () => {
         try {
-            const token = localStorage.getItem('loginToken');
+            const Token = localStorage.getItem('loginToken');
             const userId = localStorage.getItem('userId');
-            if (!userId || !token) {
+            if (!userId || !Token) {
                 alert('Authentication details missing. Please log in again.');
-                navigate('/Signin'); // Redirect to Signin page
+                navigate('/Sigin'); // Redirect to Signin page
                 return;
             }
             const response = await axios.get(`${API_URL}user/single-user/${userId}`, {
                 headers: {
-                    'token': token,
+                    'token': `${Token}`,
                 },
             });
             setUserData(response.data);
@@ -31,15 +31,15 @@ function Totalworks() {
 
     const handleDelete = async (workId) => {
         try {
-            const token = localStorage.getItem('loginToken');
-            if (!token) {
+            const Token = localStorage.getItem('loginToken');
+            if (!Token) {
                 alert('Token is missing. Please log in again.');
                 navigate('/Signin');
                 return;
             }
             await axios.delete(`${API_URL}work/deletework/${workId}`, {
                 headers: {
-                    'token': token,
+                    'token': `${Token}`,
                 },
             });
             alert('Work deleted successfully');
