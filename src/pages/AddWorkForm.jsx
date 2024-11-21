@@ -33,11 +33,8 @@ function AddWorkForm() {
     formData.append("role", role);
     formData.append("experience", experience);
     formData.append("location", location);
+    formData.append("file", file);
 
-    // Append each file to the form data
-    Array.from(file).forEach(f => formData.append("photos", f)); // Append multiple photos
-
-    // Add role-specific fields to the formData as needed
     if (role === "teacher") {
       formData.append("standard", standard);
       formData.append("subject", subject);
@@ -162,7 +159,7 @@ function AddWorkForm() {
             </select>
           </div>
         )}
-
+        
         {role === 'marbul' && (
           <div className='mb-5'>
             <label htmlFor='marbultype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Marble Type</label>
@@ -214,12 +211,11 @@ function AddWorkForm() {
         </div>
 
         <div className="mb-5">
-          <label htmlFor="photos" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Upload Photos</label>
+          <label htmlFor="file" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Upload Photo</label>
           <input
             type="file"
-            name="photos"
-            multiple
-            onChange={(e) => setFile(e.target.files)}  // Handle multiple files
+            id="file"
+            onChange={(e) => setFile(e.target.files[0])}
             className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
           />
         </div>
@@ -231,8 +227,8 @@ function AddWorkForm() {
           Submit
         </button>
 
-        {success && <div className="alert alert-success">{success}</div>}
-        {error && <div className="alert alert-danger">{error}</div>}
+        {success && <p className="text-green-500 mt-4">{success}</p>}
+        {error && <p className="text-red-500 mt-4">{error}</p>}
       </form>
 
       <Footer />
