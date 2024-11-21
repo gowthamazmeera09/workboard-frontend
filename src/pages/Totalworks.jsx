@@ -34,7 +34,7 @@ function Totalworks() {
             const Token = localStorage.getItem('loginToken');
             if (!Token) {
                 alert('Token is missing. Please log in again.');
-                navigate('/Signin');
+                navigate('/Sigin');
                 return;
             }
             await axios.delete(`${API_URL}work/deletework/${workId}`, {
