@@ -12,30 +12,50 @@ function Totalworks() {
         try {
             const token = localStorage.getItem('loginToken');
             const userId = localStorage.getItem('userId');
-            if (!userId) {
-                alert('User not found');
-                navigate('/Signin'); // Corrected 'Sigin' to 'Signin'
+            if (!userId || !token) {
+                alert('Authentication details missing. Please log in again.');
+                navigate('/Signin'); // Redirect to Signin page
                 return;
             }
             const response = await axios.get(`${API_URL}user/single-user/${userId}`, {
                 headers: {
-                    'token': `${token}`
-                }
+                    'token': token,
+                },
             });
             setUserData(response.data);
-            console.log(response.data);
         } catch (error) {
             console.error(error);
-            alert("Failed to get the user data");
+            alert('Failed to get the user data');
+        }
+    };
+
+    const handleDelete = async (workId) => {
+        try {
+            const token = localStorage.getItem('loginToken');
+            if (!token) {
+                alert('Token is missing. Please log in again.');
+                navigate('/Signin');
+                return;
+            }
+            await axios.delete(`${API_URL}work/deletework/${workId}`, {
+                headers: {
+                    'token': token,
+                },
+            });
+            alert('Work deleted successfully');
+            getalldata(); // Refresh the data after deletion
+        } catch (error) {
+            console.error(error);
+            alert('Error deleting the work');
         }
     };
 
     useEffect(() => {
         getalldata();
-    }, []); // Empty dependency array to run only once on mount
+    }, []); // Run only once on mount
 
     return (
-        <div>
+        <div className="p-4">
             <h1 className="text-2xl font-bold mb-4">Added Work Details</h1>
             {userdata && userdata.user && userdata.user.addwork && userdata.user.addwork.length > 0 ? (
                 <table className="min-w-full border-collapse border border-gray-300">
@@ -48,7 +68,8 @@ function Totalworks() {
                             <th className="border border-gray-300 px-4 py-2">Subject</th>
                             <th className="border border-gray-300 px-4 py-2">Vehicle Type</th>
                             <th className="border border-gray-300 px-4 py-2">Painter Type</th>
-                            <th className="border border-gray-300 px-4 py-2">images</th>
+                            <th className="border border-gray-300 px-4 py-2">Images</th>
+                            <th className="border border-gray-300 px-4 py-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +82,30 @@ function Totalworks() {
                                 <td className="border border-gray-300 px-4 py-2">{work.subject || 'N/A'}</td>
                                 <td className="border border-gray-300 px-4 py-2">{work.vehicletype || 'N/A'}</td>
                                 <td className="border border-gray-300 px-4 py-2">{work.paintertype || 'N/A'}</td>
+                                <td className="border border-gray-300 px-4 py-2">
+                                    {work.images && work.images.length > 0 ? (
+                                        <div className="flex space-x-2">
+                                            {work.images.map((image, imgIndex) => (
+                                                <img
+                                                    key={imgIndex}
+                                                    src={`${API_URL}uploads/${image}`}
+                                                    alt={`work-${imgIndex}`}
+                                                    className="w-16 h-16 object-cover rounded"
+                                                />
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        'No Images'
+                                    )}
+                                </td>
+                                <td className="border border-gray-300 px-4 py-2">
+                                    <button
+                                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700"
+                                        onClick={() => handleDelete(work._id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
