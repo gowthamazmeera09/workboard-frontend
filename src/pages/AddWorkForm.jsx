@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { API_URL } from '../data/data';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -14,7 +13,7 @@ function AddWorkForm() {
   const [paintertype, setPainterType] = useState("");
   const [weldingtype, setWeldingType] = useState("");
   const [marbultype, setMarbulType] = useState("");
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]); // Updated: multiple files support
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -34,7 +33,6 @@ function AddWorkForm() {
     formData.append("role", role);
     formData.append("experience", experience);
     formData.append("location", location);
-    formData.append("file", file);
 
     if (role === "teacher") {
       formData.append("standard", standard);
@@ -48,6 +46,9 @@ function AddWorkForm() {
     } else if (role === "welder") {
       formData.append("weldingtype", weldingtype);
     }
+
+    // Append multiple files
+    files.forEach((file) => formData.append("photos", file));
 
     try {
       const userId = localStorage.getItem('userId');
@@ -160,7 +161,7 @@ function AddWorkForm() {
             </select>
           </div>
         )}
-        
+
         {role === 'marbul' && (
           <div className='mb-5'>
             <label htmlFor='marbultype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Marble Type</label>
@@ -180,15 +181,17 @@ function AddWorkForm() {
             <label htmlFor='weldingtype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Welding Type</label>
             <select value={weldingtype} onChange={(e) => setWeldingType(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
               <option value="">Select</option>
-              <option value="fabrication">Fabrication</option>
-              <option value="arcwelding">Arc Welding</option>
-              <option value="gaswelding">Gas Welding</option>
+              <option value="iron">Iron</option>
+              <option value="steel">Steel</option>
+              <option value="glass">Glass</option>
+              <option value="aluminium">Aluminium</option>
+              <option value="others">Others</option>
             </select>
           </div>
         )}
 
-        <div className="mb-5">
-          <label htmlFor="experience" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Experience</label>
+        <div className='mb-5'>
+          <label htmlFor='experience' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Experience</label>
           <input
             type="text"
             id="experience"
@@ -198,9 +201,8 @@ function AddWorkForm() {
             required
           />
         </div>
-
-        <div className="mb-5">
-          <label htmlFor="location" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Location</label>
+        <div className='mb-5'>
+          <label htmlFor='location' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Location</label>
           <input
             type="text"
             id="location"
@@ -210,27 +212,26 @@ function AddWorkForm() {
             required
           />
         </div>
-
-        <div className="mb-5">
-          <label htmlFor="file" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Upload Photo</label>
+        <div className='mb-5'>
+          <label htmlFor='photos' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Photos</label>
           <input
             type="file"
-            id="file"
-            onChange={(e) => setFile(e.target.files[0])}
-            className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
+            id="photos"
+            multiple // Updated for multiple file uploads
+            onChange={(e) => setFiles([...e.target.files])}
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
           />
         </div>
-
-        <button
-          type="submit"
-          className="w-full text-white bg-blue-500 hover:bg-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-        >
-          Submit
-        </button>
-
-        {success && <p className="text-green-500 mt-4">{success}</p>}
-        {error && <p className="text-red-500 mt-4">{error}</p>}
+        <div>
+          <button type="submit" className="bg-blue-500 text-white w-full py-2 rounded-lg">
+            Submit
+          </button>
+        </div>
       </form>
+
+      {/* Feedback Messages */}
+      {success && <div className="mt-4 p-2 bg-green-100 text-green-800">{success}</div>}
+      {error && <div className="mt-4 p-2 bg-red-100 text-red-800">{error}</div>}
 
       <Footer />
     </div>
