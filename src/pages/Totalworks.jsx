@@ -52,7 +52,6 @@ function Totalworks() {
   // Add more images to a work
   const handleAddImages = async (workId, newImages) => {
     const formData = new FormData();
-    formData.append("workId", workId);
     newImages.forEach((image) => formData.append("photos", image));
 
     try {
