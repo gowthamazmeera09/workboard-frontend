@@ -128,10 +128,14 @@ function Totalworks() {
                 <p><strong>Subject:</strong> {work.subject || "N/A"}</p>
               </div>
               <div className="mb-4">
-                <div className="flex flex-wrap gap-2">
+                <div className="flex space-x-2 overflow-x-auto">
                   {work.photos.map((image, imgIndex) => (
-                    <div key={imgIndex} className="relative">
-                      <img src={image} alt={`work-${imgIndex}`} className="w-20 h-20 object-cover rounded" />
+                    <div key={imgIndex} className="relative min-w-[80px]">
+                      <img
+                        src={image}
+                        alt={`work-${imgIndex}`}
+                        className="w-20 h-20 object-cover rounded"
+                      />
                       <button
                         className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
                         onClick={() => handleDeleteImage(work._id, image)}
