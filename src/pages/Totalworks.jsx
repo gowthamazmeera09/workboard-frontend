@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../data/data";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 function Totalworks() {
   const [userdata, setUserData] = useState(null);
+  const [selectedWork, setSelectedWork] = useState(null);
+  const [newImages, setNewImages] = useState([]);
   const navigate = useNavigate();
 
   // Fetch all user data
@@ -34,6 +33,38 @@ function Totalworks() {
     }
   };
 
+  // Handle new image selection
+  const handleImageChange = (e) => {
+    setNewImages(e.target.files);
+  };
+
+  // Upload new images to an existing work entry
+  const handleAddImages = async (workId) => {
+    const formData = new FormData();
+    for (let i = 0; i < newImages.length; i++) {
+      formData.append("photos", newImages[i]);
+    }
+
+    try {
+      const Token = localStorage.getItem("loginToken");
+      const response = await axios.post(
+        `${API_URL}work/addimages/${workId}`,
+        formData,
+        {
+          headers: {
+            token: `${Token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      alert("Images added successfully");
+      getalldata(); // Refresh the data after adding images
+    } catch (error) {
+      console.error(error);
+      alert("Failed to add images");
+    }
+  };
+
   // Delete a work entry
   const handleDeleteWork = async (workId) => {
     try {
@@ -42,36 +73,16 @@ function Totalworks() {
         headers: { token: `${Token}` },
       });
       alert("Work deleted successfully");
-      getalldata(); // Refresh data
+      getalldata(); // Refresh data after work deletion
     } catch (error) {
       console.error(error);
       alert("Error deleting the work");
     }
   };
 
-  // Add more images to a work
-  const handleAddImages = async (workId, newImages) => {
-    const formData = new FormData();
-    newImages.forEach((image) => formData.append("photos", image));
-
-    try {
-      const Token = localStorage.getItem("loginToken");
-      await axios.post(`${API_URL}work/add-images`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          token: `${Token}`,
-        },
-      });
-      alert("Images added successfully");
-      getalldata(); // Refresh data
-    } catch (error) {
-      console.error(error);
-      alert("Failed to add images");
-    }
-  };
-
   // Delete a single image from a work
-  const handleDeleteImage = async (workId, publicId) => {
+  const handleDeleteImage = async (workId, image) => {
+    const publicId = image.split('/').pop().split('.')[0]; // Extract publicId from image URL
     try {
       const Token = localStorage.getItem("loginToken");
       await axios.post(
@@ -82,7 +93,7 @@ function Totalworks() {
         }
       );
       alert("Image deleted successfully");
-      getalldata(); // Refresh data
+      getalldata(); // Refresh data after deleting the image
     } catch (error) {
       console.error(error);
       alert("Failed to delete image");
@@ -93,14 +104,6 @@ function Totalworks() {
     getalldata();
   }, []);
 
-  const sliderSettings = {
-    dots: true,
-    infinite: false,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    arrows: true,
-  };
-
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Added Work Details</h1>
@@ -110,7 +113,7 @@ function Totalworks() {
             <div key={index} className="bg-white p-4 border rounded shadow-md">
               <div className="flex items-center mb-4">
                 <img
-                  src={`${API_URL}uploads/${userdata.user.profilePicture}`}
+                  src={userdata.user.profilePicture ? `${API_URL}uploads/${userdata.user.profilePicture}` : "defaultProfilePicURL"}
                   alt="User Profile"
                   className="w-16 h-16 object-cover rounded-full border-2 border-gray-300"
                 />
@@ -125,40 +128,32 @@ function Totalworks() {
                 <p><strong>Subject:</strong> {work.subject || "N/A"}</p>
               </div>
               <div className="mb-4">
-                {work.photos.length > 4 ? (
-                  <Slider {...sliderSettings}>
-                    {work.photos.map((image, imgIndex) => (
-                      <div key={imgIndex} className="p-2 relative">
-                        <img src={image} alt={`work-${imgIndex}`} className="w-full h-auto object-cover rounded" />
-                        <button
-                          className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
-                          onClick={() => handleDeleteImage(work._id, image.split("/").pop().split(".")[0])}
-                        >
-                          ✕
-                        </button>
-                      </div>
-                    ))}
-                  </Slider>
-                ) : (
-                  work.photos.map((image, imgIndex) => (
+                <div className="flex flex-wrap gap-2">
+                  {work.photos.map((image, imgIndex) => (
                     <div key={imgIndex} className="relative">
-                      <img src={image} alt={`work-${imgIndex}`} className="w-16 h-16 object-cover rounded" />
+                      <img src={image} alt={`work-${imgIndex}`} className="w-20 h-20 object-cover rounded" />
                       <button
                         className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
-                        onClick={() => handleDeleteImage(work._id, image.split("/").pop().split(".")[0])}
+                        onClick={() => handleDeleteImage(work._id, image)}
                       >
                         ✕
                       </button>
                     </div>
-                  ))
-                )}
+                  ))}
+                </div>
               </div>
               <input
                 type="file"
                 multiple
-                accept="image/*"
-                onChange={(e) => handleAddImages(work._id, Array.from(e.target.files))}
+                onChange={handleImageChange}
+                className="mb-4"
               />
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 w-full mt-4"
+                onClick={() => handleAddImages(work._id)}
+              >
+                Add Images
+              </button>
               <button
                 className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 w-full mt-4"
                 onClick={() => handleDeleteWork(work._id)}
