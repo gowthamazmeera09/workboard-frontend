@@ -128,14 +128,9 @@ const Navbar = () => {
                 <FiHome className="mr-2 lg:text-black text-4xl" /> <p className='lg:text-black text-white'>Home</p>
               </Link>
             </li>
-            {/* <li>
-              <Link to="/About" className="block px-2 py-1 lg:py-2" onClick={() => setIsMenuOpen(false)}>
-                About
-              </Link>
-            </li> */}
             <li>
               <Link to="/About" className="flex items-center px-2 py-1 lg:py-2 text-white pt-10 px-10 lg:pt-10" onClick={() => setIsMenuOpen(false)}>
-              <IoIosPeople className="mr-2  lg:text-black text-4xl" /> <p className='lg:text-black text-white'>AboutUs</p>
+                <IoIosPeople className="mr-2  lg:text-black text-4xl" /> <p className='lg:text-black text-white'>AboutUs</p>
               </Link>
             </li>
             <li>
