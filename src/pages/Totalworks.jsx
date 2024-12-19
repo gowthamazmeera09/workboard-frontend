@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { API_URL } from "../data/data";
 
 function Totalworks() {
-  const [avatar, setAvatar] = useState('');
+  const [avatar, setAvatar] = useState("");
   const [userdata, setUserData] = useState(null);
-  const [selectedWork, setSelectedWork] = useState(null);
   const [newImages, setNewImages] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null); // Track the selected image
   const navigate = useNavigate();
 
   // Fetch all user data
@@ -18,7 +18,7 @@ function Totalworks() {
 
       if (!userId || !Token) {
         alert("Authentication details missing. Please log in again.");
-        navigate("/Signin");
+        navigate("/Sigin");
         return;
       }
 
@@ -83,7 +83,7 @@ function Totalworks() {
 
   // Delete a single image from a work
   const handleDeleteImage = async (workId, image) => {
-    const publicId = image.split('/').pop().split('.')[0]; // Extract publicId from image URL
+    const publicId = image.split("/").pop().split(".")[0]; // Extract publicId from image URL
     try {
       const Token = localStorage.getItem("loginToken");
       await axios.post(
@@ -104,12 +104,13 @@ function Totalworks() {
   useEffect(() => {
     getalldata();
   }, []);
-   useEffect(() => {
-      const storedProfilePicture = localStorage.getItem('imageUrl');
-      if (storedProfilePicture) {
-        setAvatar(storedProfilePicture);
-      }
-    }, []);
+
+  useEffect(() => {
+    const storedProfilePicture = localStorage.getItem("imageUrl");
+    if (storedProfilePicture) {
+      setAvatar(storedProfilePicture);
+    }
+  }, []);
 
   return (
     <div className="p-4">
@@ -119,7 +120,8 @@ function Totalworks() {
           {userdata.user.addwork.map((work, index) => (
             <div key={index} className="bg-white p-4 border rounded shadow-md">
               <div className="flex items-center mb-4">
-                <img src={avatar}
+                <img
+                  src={avatar}
                   alt="User Profile"
                   className="w-16 h-16 object-cover rounded-full border-2 border-gray-300"
                 />
@@ -140,7 +142,8 @@ function Totalworks() {
                       <img
                         src={image}
                         alt={`work-${imgIndex}`}
-                        className="w-20 h-20 object-cover rounded"
+                        className="w-20 h-20 object-cover rounded cursor-pointer"
+                        onClick={() => setSelectedImage(image)} // Open modal with selected image
                       />
                       <button
                         className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
@@ -175,6 +178,20 @@ function Totalworks() {
         </div>
       ) : (
         <p>No works were added</p>
+      )}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={() => setSelectedImage(null)} // Close modal on click
+        >
+          <div className="bg-white p-4 rounded shadow-lg">
+            <img
+              src={selectedImage}
+              alt="Selected Work"
+              className="max-w-full max-h-screen"
+            />
+          </div>
+        </div>
       )}
     </div>
   );
