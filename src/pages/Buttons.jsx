@@ -1,15 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import images from '../images/cartoon teacher image.webp';
 import mason from '../images/mason.jpeg'
-import marbul from '../images/marbul mason.jpg';
 import painter from '../images/painter.jpeg';
 import plumber from '../images/plumber.jpeg';
 import electrician from '../images/electrician.jpeg';
 import welder from '../images/welder.jpeg';
 import driver from '../images/driver.jpg';
 import carpenter from '../images/carpenter.jpeg';
-import ACtechnician from '../images/AC technician.jpg';
+import Ac from '../images/AcTech.jpeg';
+import lift from '../images/lift technition.jpeg';
 
 
 function Buttons() {
@@ -34,11 +33,11 @@ function Buttons() {
         <Link to="/AddWorkForm" state={{ role: 'welder' }}>
           <img src={welder} width="150px" alt="welder" />
         </Link>
-        <Link to="/AddWorkForm" state={{ role: 'teacher' }}>
-          <img src={ACtechnician} width="150px" alt="Teacher" />
+        <Link to="/AddWorkForm" state={{ role: 'AcTech' }}>
+          <img src={Ac} width="150px" alt="Driver" />
         </Link>
-        <Link to="/AddWorkForm" state={{ role: 'driver' }}>
-          <img src={driver} width="150px" alt="Driver" />
+        <Link to="/AddWorkForm" state={{ role: 'liftTech' }}>
+          <img src={lift} width="150px" alt="lift" />
         </Link>
       </div>
     </div>

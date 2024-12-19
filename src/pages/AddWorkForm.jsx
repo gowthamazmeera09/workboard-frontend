@@ -93,6 +93,8 @@ function AddWorkForm() {
             <option value="plumber">Plumber</option>
             <option value="electrician">Electrician</option>
             <option value="carpenter">Carpenter</option>
+            <option value="AcTech">AcTech</option>
+            <option value="liftTech">liftTech</option>
           </select>
         </div>
 
@@ -178,14 +180,12 @@ function AddWorkForm() {
 
         {role === 'welder' && (
           <div className='mb-5'>
-            <label htmlFor='weldingtype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Welding Type</label>
+            <label htmlFor='weldingtype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Marble Type</label>
             <select value={weldingtype} onChange={(e) => setWeldingType(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
               <option value="">Select</option>
-              <option value="iron">Iron</option>
-              <option value="steel">Steel</option>
-              <option value="glass">Glass</option>
-              <option value="aluminium">Aluminium</option>
-              <option value="others">Others</option>
+              <option value="fabrication">fabrication</option>
+              <option value="gaswelding">gaswelding</option>
+              <option value="arcwelding">arcwelding</option>
             </select>
           </div>
         )}

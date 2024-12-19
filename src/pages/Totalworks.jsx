@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { API_URL } from "../data/data";
 
 function Totalworks() {
+  const [avatar, setAvatar] = useState('');
   const [userdata, setUserData] = useState(null);
   const [selectedWork, setSelectedWork] = useState(null);
   const [newImages, setNewImages] = useState([]);
@@ -103,6 +104,12 @@ function Totalworks() {
   useEffect(() => {
     getalldata();
   }, []);
+   useEffect(() => {
+      const storedProfilePicture = localStorage.getItem('imageUrl');
+      if (storedProfilePicture) {
+        setAvatar(storedProfilePicture);
+      }
+    }, []);
 
   return (
     <div className="p-4">
@@ -112,8 +119,7 @@ function Totalworks() {
           {userdata.user.addwork.map((work, index) => (
             <div key={index} className="bg-white p-4 border rounded shadow-md">
               <div className="flex items-center mb-4">
-                <img
-                  src={userdata.user.profilePicture ? `${API_URL}uploads/${userdata.user.profilePicture}` : "defaultProfilePicURL"}
+                <img src={avatar}
                   alt="User Profile"
                   className="w-16 h-16 object-cover rounded-full border-2 border-gray-300"
                 />
