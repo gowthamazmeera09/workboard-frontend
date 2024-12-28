@@ -127,7 +127,6 @@ function Totalworks() {
                 />
                 <div className="ml-4">
                   <h2 className="text-lg font-bold">{work.role}</h2>
-                  <p className="text-sm text-gray-500">{work.location}</p>
                 </div>
               </div>
               <div className="space-y-2 mb-4">

@@ -6,7 +6,6 @@ import Footer from '../components/Footer';
 function AddWorkForm() {
   const [role, setRole] = useState("");
   const [experience, setExperience] = useState("");
-  const [location, setLocation] = useState("");
   const [standard, setStandard] = useState("");
   const [subject, setSubject] = useState("");
   const [vehicletype, setVehicleType] = useState("");
@@ -32,7 +31,6 @@ function AddWorkForm() {
     const formData = new FormData();
     formData.append("role", role);
     formData.append("experience", experience);
-    formData.append("location", location);
 
     if (role === "teacher") {
       formData.append("standard", standard);
@@ -197,17 +195,6 @@ function AddWorkForm() {
             id="experience"
             value={experience}
             onChange={(e) => setExperience(e.target.value)}
-            className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
-            required
-          />
-        </div>
-        <div className='mb-5'>
-          <label htmlFor='location' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Location</label>
-          <input
-            type="text"
-            id="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
             className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
             required
           />
