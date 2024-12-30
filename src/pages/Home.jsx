@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Buttons from '../pages/Buttons'
 
+
 function Home() {
   const [user, setUser] = useState(null); // Initialize as null to check loading state
   const userId = localStorage.getItem('userId');

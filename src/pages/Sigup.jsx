@@ -1,24 +1,30 @@
 import React, { useState } from 'react';
 import { API_URL } from '../data/data';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phonenumber, setPhonenumber] = useState("");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [phonenumber, setPhonenumber] = useState('');
   const [file, setFile] = useState(null);
+  const [location, setLocation] = useState('');
+  const [lat, setLat] = useState(null);
+  const [lng, setLng] = useState(null);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate file selection
     if (!file) {
-      setError("Please upload a photo.");
+      setError('Please upload a photo.');
+      return;
+    }
+
+    if (!location) {
+      setError('Please select your location.');
       return;
     }
 
@@ -28,6 +34,7 @@ function Signup() {
     formData.append('password', password);
     formData.append('phonenumber', phonenumber);
     formData.append('photo', file);
+    formData.append('location', JSON.stringify({ lat, lng, address: location }));
 
     try {
       const response = await fetch(`${API_URL}user/register`, {
@@ -38,22 +45,51 @@ function Signup() {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Registration successful! Please verify your email.");
-        setSuccess("Registration successful!");
-        setUsername("");
-        setEmail("");
-        setPassword("");
-        setPhonenumber("");
-        setFile(null);
+        setSuccess('Registration successful! Please verify your email.');
         navigate('/Verificationpage');
       } else {
-        // Handle server errors
-        setError(data.error || "Something went wrong. Please try again.");
+        setError(data.error || 'Something went wrong. Please try again.');
       }
     } catch (err) {
       console.error(err);
-      setError("Network error. Please try again later.");
+      setError('Network error. Please try again later.');
     }
+  };
+
+  const getCurrentLocation = async () => {
+    if (!navigator.geolocation) {
+      setError('Geolocation is not supported by your browser.');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+
+        try {
+          const response = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBmV7j6H1UQDYVjI9zlreJn2rOOb3dNemY`
+          );
+          const data = await response.json();
+
+          if (response.ok && data.status === 'OK') {
+            const address = data.results[0]?.formatted_address || 'Address not found';
+            setLocation(address);
+            setLat(latitude);
+            setLng(longitude);
+          } else {
+            setError('Unable to fetch location. Please try again.');
+          }
+        } catch (error) {
+          console.error('Error fetching geolocation:', error);
+          setError('An error occurred while fetching location. Please try again later.');
+        }
+      },
+      (error) => {
+        console.error('Geolocation error:', error);
+        setError('Unable to retrieve your location. Please enable location services or check your browser settings.');
+      }
+    );
   };
 
   return (
@@ -61,8 +97,11 @@ function Signup() {
       {success && <div style={{ color: 'green' }}>{success}</div>}
       {error && <div style={{ color: 'red' }}>{error}</div>}
       <form className="max-w-sm mx-auto mt-20 lg:mt-[-300px]" onSubmit={handleSubmit}>
+        {/* Username Field */}
         <div className="mb-5">
-          <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Username</label>
+          <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+            Username
+          </label>
           <input
             type="text"
             name="username"
@@ -73,8 +112,12 @@ function Signup() {
             required
           />
         </div>
+
+        {/* Email Field */}
         <div className="mb-5">
-          <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Your Email</label>
+          <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+            Your Email
+          </label>
           <input
             type="email"
             name="email"
@@ -85,8 +128,12 @@ function Signup() {
             required
           />
         </div>
+
+        {/* Password Field */}
         <div className="mb-5">
-          <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Create a Password</label>
+          <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+            Create a Password
+          </label>
           <input
             type="password"
             name="password"
@@ -96,8 +143,12 @@ function Signup() {
             required
           />
         </div>
+
+        {/* Phone Number Field */}
         <div className="mb-5">
-          <label htmlFor="phonenumber" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Your Phone Number</label>
+          <label htmlFor="phonenumber" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+            Your Phone Number
+          </label>
           <input
             type="number"
             name="phonenumber"
@@ -107,31 +158,52 @@ function Signup() {
             required
           />
         </div>
+
+        {/* Photo Upload Field */}
         <div className="mb-5">
-          <label htmlFor="photo" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Upload Photo</label>
+          <label htmlFor="photo" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+            Upload Photo
+          </label>
           <input
             type="file"
             name="photo"
             onChange={(e) => setFile(e.target.files[0])}
-            className="block w-full"
+            className="shadow-sm bg-gray-50 border h-8 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
+
+        {/* Location Input */}
         <div className="mb-5">
-          <label htmlFor="login" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-            Already have an account?
-            <Link to="/Signin" className="text-sm text-blue-800 dark:text-blue-500 hover:underline"> Login here</Link>
+          <label htmlFor="location" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+            Select Your Location
           </label>
+          <input
+            type="text"
+            name="location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            placeholder="Your address"
+            className="shadow-sm bg-gray-50 border h-8 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            required
+          />
+          <button
+            type="button"
+            onClick={getCurrentLocation}
+            className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
+          >
+            Use Current Location
+          </button>
         </div>
-        <button
-          type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-small sm:w-auto px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Register
-        </button>
+
+        {/* Submit Button */}
+        <div className="mb-5">
+          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+            Register
+          </button>
+        </div>
       </form>
     </div>
   );
 }
-
 export default Signup;
