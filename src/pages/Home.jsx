@@ -4,23 +4,22 @@ import { API_URL } from '../data/data';
 import welcomeimage from '../images/worker-welcome-removebg-preview.png';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
-import Buttons from '../pages/Buttons'
-
+import Buttons from '../pages/Buttons';
 
 function Home() {
   const [user, setUser] = useState(null); // Initialize as null to check loading state
   const userId = localStorage.getItem('userId');
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!userId) {
-      alert("user not found");
-      Navigate('/');
+      alert("User not found");
+      navigate('/');
     }
     if (userId) { // Check if userId exists
       axios.get(`${API_URL}user/single-user/${userId}`)
         .then((res) => {
-          console.log(res.data)
+          console.log(res.data);
           setUser(res.data); // Assuming res.data is an object with user details
         })
         .catch((error) => {
@@ -34,12 +33,13 @@ function Home() {
       {/* Fixed Background Image */}
       <div className="fixed top-16 left-0 right-0 z-10 bg-white">
         <div className="mx-auto mt-10">
-          <img src={welcomeimage} width="300px" className="welcome-image mx-auto" />
+          <img src={welcomeimage} width="200px" className="welcome-image mx-auto" alt="Welcome Image" />
         </div>
         {user ? (
-          <h1 className="mt-4 font-serif text-3xl text-center">
-            Welcome, {user.user.username}!
-          </h1>
+          <div className="mt-4 text-center">
+            <h1 className="font-serif text-3xl">Welcome, {user.username}!</h1>
+            <p className="text-xl">Address: {user.location.address}</p> {/* Display the address */}
+          </div>
         ) : (
           <p className="text-center">Loading user data...</p>
         )}
@@ -52,9 +52,7 @@ function Home() {
         <Buttons />
       </div>
 
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 }

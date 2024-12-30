@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { API_URL } from '../data/data';
 import { useNavigate } from 'react-router-dom';
+import { GoogleMap, useJsApiLoader,StandaloneSearchBox } from '@react-google-maps/api'
+import { useRef } from 'react';
 
 function Signup() {
   const [username, setUsername] = useState('');
@@ -11,9 +13,27 @@ function Signup() {
   const [location, setLocation] = useState('');
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
+  const [locationSuggestions, setLocationSuggestions] = useState([]);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: 'AIzaSyC3W8NzbhtGaaiRLHt7Bjo8gkSI1TCHDeM',
+    libraries:["places"]
+  })
+  const inputref = useRef(null)
+  const handleOnPlacesChanged = () => {
+    const places = inputref.current.getPlaces();
+    if (places.length > 0) {
+      const place = places[0];
+      setLocation(place.formatted_address || '');
+      setLat(place.geometry.location.lat());
+      setLng(place.geometry.location.lng());
+      setLocationSuggestions([]); // Clear suggestions once a selection is made
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +44,7 @@ function Signup() {
     }
 
     if (!location) {
-      setError('Please select your location.');
+      setError('Please select or type your location.');
       return;
     }
 
@@ -68,7 +88,7 @@ function Signup() {
 
         try {
           const response = await fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBmV7j6H1UQDYVjI9zlreJn2rOOb3dNemY`
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyC3W8NzbhtGaaiRLHt7Bjo8gkSI1TCHDeM`
           );
           const data = await response.json();
 
@@ -90,6 +110,37 @@ function Signup() {
         setError('Unable to retrieve your location. Please enable location services or check your browser settings.');
       }
     );
+  };
+
+  const handleLocationChange = async (e) => {
+    const value = e.target.value;
+    setLocation(value);
+
+    if (value.length >= 3) {
+      try {
+        const response = await fetch(
+          `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${value}&key=AIzaSyD-63BvgSNSFI87jy5SeZBhjxpr1IgMymk`
+        );
+        const data = await response.json();
+
+        if (data.status === 'OK') {
+          setLocationSuggestions(data.predictions);
+        } else {
+          setLocationSuggestions([]);
+        }
+      } catch (err) {
+        console.error('Error fetching location suggestions:', err);
+      }
+    } else {
+      setLocationSuggestions([]);
+    }
+  };
+
+  const selectSuggestion = (place) => {
+    setLocation(place.description);
+    setLat(place.geometry.location.lat());
+    setLng(place.geometry.location.lng());
+    setLocationSuggestions([]);
   };
 
   return (
@@ -174,6 +225,11 @@ function Signup() {
         </div>
 
         {/* Location Input */}
+
+        {isLoaded &&
+        <StandaloneSearchBox onLoad={(ref)=> inputref.current = ref}
+        onPlacesChanged={handleOnPlacesChanged}
+        >
         <div className="mb-5">
           <label htmlFor="location" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
             Select Your Location
@@ -182,11 +238,22 @@ function Signup() {
             type="text"
             name="location"
             value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            onChange={handleLocationChange}
             placeholder="Your address"
             className="shadow-sm bg-gray-50 border h-8 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
+          <ul className="mt-2">
+            {locationSuggestions.map((suggestion) => (
+              <li
+                key={suggestion.place_id}
+                className="cursor-pointer text-blue-500 hover:underline"
+                onClick={() => selectSuggestion(suggestion)}
+              >
+                {suggestion.description}
+              </li>
+            ))}
+          </ul>
           <button
             type="button"
             onClick={getCurrentLocation}
@@ -195,6 +262,8 @@ function Signup() {
             Use Current Location
           </button>
         </div>
+        </StandaloneSearchBox>
+        }
 
         {/* Submit Button */}
         <div className="mb-5">
@@ -206,4 +275,5 @@ function Signup() {
     </div>
   );
 }
+
 export default Signup;

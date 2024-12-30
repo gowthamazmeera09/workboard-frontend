@@ -73,7 +73,7 @@ function AddWorkForm() {
 
   return (
     <div className="min-h-screen flex flex-col pr-20 pl-20 lg:mt-[-400px]">
-      <form className="max-w-sm mx-auto mt-20" onSubmit={handleSubmit}>
+      <form className="max-w-sm mx-auto mt-24" onSubmit={handleSubmit}>
         <div className='mb-5'>
           <label htmlFor='role' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Role</label>
           <select
