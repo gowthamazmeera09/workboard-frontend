@@ -20,7 +20,7 @@ function Signup() {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyC3W8NzbhtGaaiRLHt7Bjo8gkSI1TCHDeM',
+    googleMapsApiKey: 'AIzaSyDEIxNcqh3HrwRDnWTkyRxK4EAzzcRfRFI',
     libraries:["places"]
   })
   const inputref = useRef(null)
@@ -88,7 +88,7 @@ function Signup() {
 
         try {
           const response = await fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyC3W8NzbhtGaaiRLHt7Bjo8gkSI1TCHDeM`
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDEIxNcqh3HrwRDnWTkyRxK4EAzzcRfRFI`
           );
           const data = await response.json();
 
@@ -119,7 +119,7 @@ function Signup() {
     if (value.length >= 3) {
       try {
         const response = await fetch(
-          `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${value}&key=AIzaSyD-63BvgSNSFI87jy5SeZBhjxpr1IgMymk`
+          `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${value}&key=AIzaSyDEIxNcqh3HrwRDnWTkyRxK4EAzzcRfRFI`
         );
         const data = await response.json();
 
