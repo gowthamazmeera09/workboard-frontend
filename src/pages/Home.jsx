@@ -37,8 +37,8 @@ function Home() {
         </div>
         {user ? (
           <div className="mt-4 text-center">
-            <h1 className="font-serif text-3xl">Welcome, {user.username}!</h1>
-            <p className="text-xl">Address: {user.location.address}</p> {/* Display the address */}
+            <h1 className="font-serif text-3xl">Welcome,{user.user.username}!</h1>
+            <p className="text-sm">Address: {user.location.address}</p> {/* Display the address */}
           </div>
         ) : (
           <p className="text-center">Loading user data...</p>
