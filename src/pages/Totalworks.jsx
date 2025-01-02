@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../data/data";
+import LoadingSpinner from './LoadingSpinner';
 
 function Totalworks() {
   const [avatar, setAvatar] = useState("");
   const [userdata, setUserData] = useState(null);
   const [newImages, setNewImages] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null); // Track the selected image
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isAddingImages, setIsAddingImages] = useState(false); // Loading state for adding images
+  const [isDeletingWork, setIsDeletingWork] = useState(false); // Loading state for deleting work
+  const [isDeletingImage, setIsDeletingImage] = useState(false); // Loading state for deleting images
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   // Fetch all user data
@@ -18,7 +24,7 @@ function Totalworks() {
 
       if (!userId || !Token) {
         alert("Authentication details missing. Please log in again.");
-        navigate("/Sigin");
+        navigate("/Signin");
         return;
       }
 
@@ -41,6 +47,7 @@ function Totalworks() {
 
   // Upload new images to an existing work entry
   const handleAddImages = async (workId) => {
+    setIsAddingImages(true); // Show loading spinner
     const formData = new FormData();
     for (let i = 0; i < newImages.length; i++) {
       formData.append("photos", newImages[i]);
@@ -48,7 +55,7 @@ function Totalworks() {
 
     try {
       const Token = localStorage.getItem("loginToken");
-      const response = await axios.post(
+      await axios.post(
         `${API_URL}work/addimages/${workId}`,
         formData,
         {
@@ -63,11 +70,14 @@ function Totalworks() {
     } catch (error) {
       console.error(error);
       alert("Failed to add images");
+    } finally {
+      setIsAddingImages(false); // Hide loading spinner
     }
   };
 
   // Delete a work entry
   const handleDeleteWork = async (workId) => {
+    setIsDeletingWork(true); // Show loading spinner
     try {
       const Token = localStorage.getItem("loginToken");
       await axios.delete(`${API_URL}work/deletework/${workId}`, {
@@ -78,11 +88,14 @@ function Totalworks() {
     } catch (error) {
       console.error(error);
       alert("Error deleting the work");
+    } finally {
+      setIsDeletingWork(false); // Hide loading spinner
     }
   };
 
   // Delete a single image from a work
   const handleDeleteImage = async (workId, image) => {
+    setIsDeletingImage(true); // Show loading spinner
     const publicId = image.split("/").pop().split(".")[0]; // Extract publicId from image URL
     try {
       const Token = localStorage.getItem("loginToken");
@@ -98,6 +111,8 @@ function Totalworks() {
     } catch (error) {
       console.error(error);
       alert("Failed to delete image");
+    } finally {
+      setIsDeletingImage(false); // Hide loading spinner
     }
   };
 
@@ -114,6 +129,10 @@ function Totalworks() {
 
   return (
     <div className="p-4">
+      {isAddingImages && <LoadingSpinner />}
+      {isDeletingWork && <LoadingSpinner />}
+      {isDeletingImage && <LoadingSpinner />}
+      {loading && <LoadingSpinner />} {/* Show spinner when loading */}
       <h1 className="text-2xl font-bold mb-4">Added Work Details</h1>
       {userdata && userdata.user && userdata.user.addwork && userdata.user.addwork.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -163,14 +182,16 @@ function Totalworks() {
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 w-full mt-4"
                 onClick={() => handleAddImages(work._id)}
+                disabled={isAddingImages} // Disable button while loading
               >
-                Add Images
+                {isAddingImages ? "Adding..." : "Add Images"}
               </button>
               <button
                 className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 w-full mt-4"
                 onClick={() => handleDeleteWork(work._id)}
+                disabled={isDeletingWork} // Disable button while loading
               >
-                Delete Work
+                {isDeletingWork ? "Deleting..." : "Delete Work"}
               </button>
             </div>
           ))}

@@ -1,38 +1,41 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { API_URL } from '../data/data';
+import LoadingSpinner from './LoadingSpinner'; // Import the loading spinner component
 
-function Sigin() {
+function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    setLoading(true); // Set loading state
+
     try {
       const response = await fetch(`${API_URL}user/login`, {
         method: 'POST',
         headers: {
-          'Content-type': 'application/json'
+          'Content-type': 'application/json',
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok) {
-        alert("Login successful!");
         
+
         // Save login details in localStorage
         localStorage.setItem('loginToken', data.token);
         localStorage.setItem('userId', data.userId);
         localStorage.setItem('imageUrl', data.photo);
-        
+
         // Navigate to the Home page
         Navigate('/Home');
-        
+
         // Reload to reflect the changes
         window.location.reload();
       } else {
@@ -45,11 +48,15 @@ function Sigin() {
       setError("An error occurred. Please try again.");
       setEmail("");
       setPassword("");
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
   return (
     <div className="max-w-sm mx-auto mt-20 lg:mt-[-200px]">
+      {loading && <LoadingSpinner />} {/* Show spinner when loading */}
+      
       <form onSubmit={handleSubmit}>
         <div className="mb-5">
           <label htmlFor="email" className="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">
@@ -68,7 +75,7 @@ function Sigin() {
         
         <div className="mb-5">
           <label htmlFor="password" className="block mb-2 text-sm font-medium mx-16 text-gray-900 dark:text-black">
-             Your password
+            Your password
           </label>
           <input
             type="password"
@@ -102,4 +109,4 @@ function Sigin() {
   );
 }
 
-export default Sigin;
+export default Signin;

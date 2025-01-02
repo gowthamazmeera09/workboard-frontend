@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { API_URL } from '../data/data';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Footer from '../components/Footer';
+import LoadingSpinner from './LoadingSpinner'; // Import the LoadingSpinner
 
 function AddWorkForm() {
   const [role, setRole] = useState("");
@@ -15,6 +16,7 @@ function AddWorkForm() {
   const [files, setFiles] = useState([]); // Updated: multiple files support
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // New state for loading
   const navigate = useNavigate();
   const locationState = useLocation().state;
 
@@ -27,6 +29,7 @@ function AddWorkForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading state to true
 
     const formData = new FormData();
     formData.append("role", role);
@@ -68,11 +71,14 @@ function AddWorkForm() {
       }
     } catch (error) {
       setError("Error: Unable to add work.");
+    } finally {
+      setLoading(false); // Set loading state to false once done
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col pr-20 pl-20 lg:mt-[-400px]">
+      {loading && <LoadingSpinner />} {/* Show loading spinner if loading is true */}
       <form className="max-w-sm mx-auto mt-24" onSubmit={handleSubmit}>
         <div className='mb-5'>
           <label htmlFor='role' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Role</label>
@@ -210,7 +216,7 @@ function AddWorkForm() {
           />
         </div>
         <div>
-          <button type="submit" className="bg-blue-500 text-white w-full py-2 rounded-lg">
+          <button type="submit" className="bg-blue-500 text-white w-full py-2 rounded-lg" disabled={loading}>
             Submit
           </button>
         </div>

@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { API_URL } from '../data/data';
 import { useNavigate } from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, StandaloneSearchBox } from '@react-google-maps/api';
+import LoadingSpinner from './LoadingSpinner';
 
 function Signup() {
   const [username, setUsername] = useState('');
@@ -153,11 +154,7 @@ function Signup() {
 
   return (
     <div className="min-h-screen flex flex-col pr-20 pl-20">
-      {loading && (
-        <div className="flex justify-center items-center">
-          <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-        </div>
-      )}
+      {loading && <LoadingSpinner />} {/* Show spinner when loading */}
       {success && <div style={{ color: 'green' }}>{success}</div>}
       {error && <div style={{ color: 'red' }}>{error}</div>}
       <form className="max-w-sm mx-auto mt-20 lg:mt-[-300px]" onSubmit={handleSubmit}>
