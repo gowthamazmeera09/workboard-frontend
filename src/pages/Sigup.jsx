@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { API_URL } from '../data/data';
 import { useNavigate } from 'react-router-dom';
-import { GoogleMap, useJsApiLoader,StandaloneSearchBox } from '@react-google-maps/api'
-import { useRef } from 'react';
+import { GoogleMap, useJsApiLoader, StandaloneSearchBox } from '@react-google-maps/api';
 
 function Signup() {
   const [username, setUsername] = useState('');
@@ -16,14 +15,17 @@ function Signup() {
   const [locationSuggestions, setLocationSuggestions] = useState([]);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyDEIxNcqh3HrwRDnWTkyRxK4EAzzcRfRFI',
-    libraries:["places"]
-  })
-  const inputref = useRef(null)
+    libraries: ['places'],
+  });
+
+  const inputref = useRef(null);
+
   const handleOnPlacesChanged = () => {
     const places = inputref.current.getPlaces();
     if (places.length > 0) {
@@ -31,7 +33,7 @@ function Signup() {
       setLocation(place.formatted_address || '');
       setLat(place.geometry.location.lat());
       setLng(place.geometry.location.lng());
-      setLocationSuggestions([]); // Clear suggestions once a selection is made
+      setLocationSuggestions([]);
     }
   };
 
@@ -56,6 +58,8 @@ function Signup() {
     formData.append('photo', file);
     formData.append('location', JSON.stringify({ lat, lng, address: location }));
 
+    setLoading(true);
+
     try {
       const response = await fetch(`${API_URL}user/register`, {
         method: 'POST',
@@ -66,13 +70,17 @@ function Signup() {
 
       if (response.ok) {
         setSuccess('Registration successful! Please verify your email.');
-        navigate('/Verificationpage');
+        setTimeout(() => {
+          navigate('/Verificationpage');
+        }, 2000);
       } else {
         setError(data.error || 'Something went wrong. Please try again.');
       }
     } catch (err) {
       console.error(err);
       setError('Network error. Please try again later.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -145,10 +153,14 @@ function Signup() {
 
   return (
     <div className="min-h-screen flex flex-col pr-20 pl-20">
+      {loading && (
+        <div className="flex justify-center items-center">
+          <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
       {success && <div style={{ color: 'green' }}>{success}</div>}
       {error && <div style={{ color: 'red' }}>{error}</div>}
       <form className="max-w-sm mx-auto mt-20 lg:mt-[-300px]" onSubmit={handleSubmit}>
-        {/* Username Field */}
         <div className="mb-5">
           <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
             Username
@@ -164,7 +176,6 @@ function Signup() {
           />
         </div>
 
-        {/* Email Field */}
         <div className="mb-5">
           <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
             Your Email
@@ -180,7 +191,6 @@ function Signup() {
           />
         </div>
 
-        {/* Password Field */}
         <div className="mb-5">
           <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
             Create a Password
@@ -195,7 +205,6 @@ function Signup() {
           />
         </div>
 
-        {/* Phone Number Field */}
         <div className="mb-5">
           <label htmlFor="phonenumber" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
             Your Phone Number
@@ -210,7 +219,6 @@ function Signup() {
           />
         </div>
 
-        {/* Photo Upload Field */}
         <div className="mb-5">
           <label htmlFor="photo" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
             Upload Photo
@@ -224,48 +232,46 @@ function Signup() {
           />
         </div>
 
-        {/* Location Input */}
-
-        {isLoaded &&
-        <StandaloneSearchBox onLoad={(ref)=> inputref.current = ref}
-        onPlacesChanged={handleOnPlacesChanged}
-        >
-        <div className="mb-5">
-          <label htmlFor="location" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-            Select Your Location
-          </label>
-          <input
-            type="text"
-            name="location"
-            value={location}
-            onChange={handleLocationChange}
-            placeholder="Your address"
-            className="shadow-sm bg-gray-50 border h-8 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            required
-          />
-          <ul className="mt-2">
-            {locationSuggestions.map((suggestion) => (
-              <li
-                key={suggestion.place_id}
-                className="cursor-pointer text-blue-500 hover:underline"
-                onClick={() => selectSuggestion(suggestion)}
-              >
-                {suggestion.description}
-              </li>
-            ))}
-          </ul>
-          <button
-            type="button"
-            onClick={getCurrentLocation}
-            className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
+        {isLoaded && (
+          <StandaloneSearchBox
+            onLoad={(ref) => (inputref.current = ref)}
+            onPlacesChanged={handleOnPlacesChanged}
           >
-            Use Current Location
-          </button>
-        </div>
-        </StandaloneSearchBox>
-        }
+            <div className="mb-5">
+              <label htmlFor="location" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+                Select Your Location
+              </label>
+              <input
+                type="text"
+                name="location"
+                value={location}
+                onChange={handleLocationChange}
+                placeholder="Your address"
+                className="shadow-sm bg-gray-50 border h-8 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+              />
+              <ul className="mt-2">
+                {locationSuggestions.map((suggestion) => (
+                  <li
+                    key={suggestion.place_id}
+                    className="cursor-pointer text-blue-500 hover:underline"
+                    onClick={() => selectSuggestion(suggestion)}
+                  >
+                    {suggestion.description}
+                  </li>
+                ))}
+              </ul>
+              <button
+                type="button"
+                onClick={getCurrentLocation}
+                className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
+              >
+                Use Current Location
+              </button>
+            </div>
+          </StandaloneSearchBox>
+        )}
 
-        {/* Submit Button */}
         <div className="mb-5">
           <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
             Register
