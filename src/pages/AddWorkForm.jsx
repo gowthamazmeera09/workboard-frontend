@@ -13,6 +13,10 @@ function AddWorkForm() {
   const [paintertype, setPainterType] = useState("");
   const [weldingtype, setWeldingType] = useState("");
   const [marbultype, setMarbulType] = useState("");
+  const [cartype, setCartype] = useState("");
+  const [biketype, setBiketype] = useState("");
+  const [autotype, setAutotype] = useState("");
+  const [shoottype, setShoottype] = useState("");
   const [files, setFiles] = useState([]); // Updated: multiple files support
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
@@ -46,6 +50,14 @@ function AddWorkForm() {
       formData.append("marbultype", marbultype);
     } else if (role === "welder") {
       formData.append("weldingtype", weldingtype);
+    } else if (role === "car mechanic") {
+      formData.append("cartype", cartype);
+    } else if (role === "bike mechanic") {
+      formData.append("biketype", biketype);
+    } else if (role === "auto mechanic") {
+      formData.append("autotype", autotype);
+    } else if (role === "photographer") {
+      formData.append("shoottype", shoottype);
     }
 
     // Append multiple files
@@ -99,6 +111,22 @@ function AddWorkForm() {
             <option value="carpenter">Carpenter</option>
             <option value="AcTech">AcTech</option>
             <option value="liftTech">liftTech</option>
+            <option value="agricultural labour">Agricultural labour</option>
+            <option value="car mechanic">Car mechanic</option>
+            <option value="bike mechanic">Bike mechanic</option>
+            <option value="auto mechanic">Auto mechanic</option>
+            <option value="car wash">Car wash</option>
+            <option value="chief">Chief</option>
+            <option value="cloths washer">Cloths washer</option>
+            <option value="garden cleaner">Garden cleaner</option>
+            <option value="glass cleaner">Glass cleaner</option>
+            <option value="kids caretaker">Kids caretaker</option>
+            <option value="old people caretaker">Old people caretaker</option>
+            <option value="makeup artest">Makeup artest</option>
+            <option value="photographer">Photographer</option>
+            <option value="cattering">Catering</option>
+            <option value="washing dishes">washing dishes</option>
+
           </select>
         </div>
 
@@ -190,6 +218,65 @@ function AddWorkForm() {
               <option value="fabrication">fabrication</option>
               <option value="gaswelding">gaswelding</option>
               <option value="arcwelding">arcwelding</option>
+            </select>
+          </div>
+        )}
+
+        {role === 'car mechanic' && (
+          <div className='mb-5'>
+            <label htmlFor='cartype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Car Type</label>
+            <select value={cartype} onChange={(e) => setCartype(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
+              <option value="">Select</option>
+              <option value="maruthi suzuki">Maruthi suzuki</option>
+              <option value="hundai">Hundai</option>
+              <option value="tata moters">TaTa moters</option>
+              <option value="mahindra">Mahindra</option>
+              <option value="honda">Honda</option>
+              <option value="toyota">Toyota</option>
+              <option value="renualt">Renualt</option>
+              <option value="volkswagan">Volkswagan</option>
+              <option value="kia">Kia</option>
+              <option value="scoda">Scoda</option>
+            </select>
+          </div>
+        )}
+
+        {role === 'bike mechanic' && (
+          <div className='mb-5'>
+            <label htmlFor='biketype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Bike Type</label>
+            <select value={biketype} onChange={(e) => setBiketype(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
+              <option value="">Select</option>
+              <option value="hero">Hero</option>
+              <option value="honda">Honda</option>
+              <option value="bajaj">Bajaj</option>
+              <option value="tvs">Tvs</option>
+              <option value="royal enfield">Royal Enfield</option>
+              <option value="ktm">Ktm</option>
+            </select>
+          </div>
+        )}
+
+        {role === 'auto mechanic' && (
+          <div className='mb-5'>
+            <label htmlFor='autotype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Auto Type</label>
+            <select value={autotype} onChange={(e) => setAutotype(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
+              <option value="">Select</option>
+              <option value="bajaj">Bajaj</option>
+              <option value="mahindra">mahindra</option>
+            </select>
+          </div>
+        )}
+
+        {role === 'photographer' && (
+          <div className='mb-5'>
+            <label htmlFor='shoottype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Shoot Type</label>
+            <select value={shoottype} onChange={(e) => setShoottype(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
+              <option value="">Select</option>
+              <option value="prewedding">Prewedding</option>
+              <option value="wedding">Wedding</option>
+              <option value="postwedding">Postwedding</option>
+              <option value="birthday">birthday</option>
+              <option value="shoot">Shoot</option>
             </select>
           </div>
         )}
