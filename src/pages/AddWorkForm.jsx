@@ -126,6 +126,7 @@ function AddWorkForm() {
             <option value="photographer">Photographer</option>
             <option value="cattering">Catering</option>
             <option value="washing dishes">washing dishes</option>
+            <option value="watchman">Watchman</option>
 
           </select>
         </div>
