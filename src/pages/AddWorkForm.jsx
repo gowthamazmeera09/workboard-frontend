@@ -50,11 +50,11 @@ function AddWorkForm() {
       formData.append("marbultype", marbultype);
     } else if (role === "welder") {
       formData.append("weldingtype", weldingtype);
-    } else if (role === "car mechanic") {
+    } else if (role === "carmechanic") {
       formData.append("cartype", cartype);
-    } else if (role === "bike mechanic") {
+    } else if (role === "bikemechanic") {
       formData.append("biketype", biketype);
-    } else if (role === "auto mechanic") {
+    } else if (role === "automechanic") {
       formData.append("autotype", autotype);
     } else if (role === "photographer") {
       formData.append("shoottype", shoottype);
@@ -118,9 +118,9 @@ function AddWorkForm() {
             <option value="AcTech">AcTech</option>
             <option value="liftTech">liftTech</option>
             <option value="agriculturallabour">Agricultural labour</option>
-            <option value="car mechanic">Car mechanic</option>
-            <option value="bike mechanic">Bike mechanic</option>
-            <option value="auto mechanic">Auto mechanic</option>
+            <option value="carmechanic">Car mechanic</option>
+            <option value="bikemechanic">Bike mechanic</option>
+            <option value="automechanic">Auto mechanic</option>
             <option value="carwash">Car wash</option>
             <option value="chief">Chief</option>
             <option value="clothswasher">Cloths washer</option>
@@ -229,7 +229,7 @@ function AddWorkForm() {
           </div>
         )}
 
-        {role === 'car mechanic' && (
+        {role === 'carmechanic' && (
           <div className='mb-5'>
             <label htmlFor='cartype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Car Type</label>
             <select value={cartype} onChange={(e) => setCartype(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
@@ -248,7 +248,7 @@ function AddWorkForm() {
           </div>
         )}
 
-        {role === 'bike mechanic' && (
+        {role === 'bikemechanic' && (
           <div className='mb-5'>
             <label htmlFor='biketype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Bike Type</label>
             <select value={biketype} onChange={(e) => setBiketype(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
@@ -263,7 +263,7 @@ function AddWorkForm() {
           </div>
         )}
 
-        {role === 'auto mechanic' && (
+        {role === 'automechanic' && (
           <div className='mb-5'>
             <label htmlFor='autotype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Auto Type</label>
             <select value={autotype} onChange={(e) => setAutotype(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
