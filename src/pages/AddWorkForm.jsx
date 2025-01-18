@@ -52,9 +52,9 @@ function AddWorkForm() {
       formData.append("weldingtype", weldingtype);
     } else if (role === "carmechanic") {
       formData.append("cartype", cartype);
-    } else if (role === "bikemechanic") {
+    } else if (role === "bike mechanic") {
       formData.append("biketype", biketype);
-    } else if (role === "automechanic") {
+    } else if (role === "auto mechanic") {
       formData.append("autotype", autotype);
     } else if (role === "photographer") {
       formData.append("shoottype", shoottype);
@@ -117,10 +117,10 @@ function AddWorkForm() {
             <option value="carpenter">Carpenter</option>
             <option value="AcTech">AcTech</option>
             <option value="liftTech">liftTech</option>
-            <option value="agriculturallabour">Agricultural labour</option>
-            <option value="carmechanic">Car mechanic</option>
-            <option value="bikemechanic">Bike mechanic</option>
-            <option value="automechanic">Auto mechanic</option>
+            <option value="agricultural labour">Agricultural labour</option>
+            <option value="car mechanic">Car mechanic</option>
+            <option value="bike mechanic">Bike mechanic</option>
+            <option value="auto mechanic">Auto mechanic</option>
             <option value="carwash">Car wash</option>
             <option value="chief">Chief</option>
             <option value="clothswasher">Cloths washer</option>
