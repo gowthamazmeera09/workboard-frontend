@@ -50,11 +50,11 @@ function AddWorkForm() {
       formData.append("marbultype", marbultype);
     } else if (role === "welder") {
       formData.append("weldingtype", weldingtype);
-    } else if (role === "car mechanic") {
+    } else if (role === "carmechanic") {
       formData.append("cartype", cartype);
-    } else if (role === "bike mechanic") {
+    } else if (role === "bikemechanic") {
       formData.append("biketype", biketype);
-    } else if (role === "auto mechanic") {
+    } else if (role === "automechanic") {
       formData.append("autotype", autotype);
     } else if (role === "photographer") {
       formData.append("shoottype", shoottype);
@@ -79,7 +79,13 @@ function AddWorkForm() {
         setSuccess("Work added successfully!");
         navigate('/');
       } else {
-        setError(data.message || "Failed to add work.");
+        // Check for specific error message
+        if (data.message === 403) {
+          alert("This work is already added. Please try a different work.");
+          setError("This work is already added."); // Optional: set error message for UI
+        } else {
+          setError(data.message || "Failed to add work.");
+        }
       }
     } catch (error) {
       setError("Error: Unable to add work.");
@@ -111,18 +117,18 @@ function AddWorkForm() {
             <option value="carpenter">Carpenter</option>
             <option value="AcTech">AcTech</option>
             <option value="liftTech">liftTech</option>
-            <option value="agricultural labour">Agricultural labour</option>
-            <option value="car mechanic">Car mechanic</option>
-            <option value="bike mechanic">Bike mechanic</option>
-            <option value="auto mechanic">Auto mechanic</option>
-            <option value="car wash">Car wash</option>
+            <option value="agriculturallabour">Agricultural labour</option>
+            <option value="carmechanic">Car mechanic</option>
+            <option value="bikemechanic">Bike mechanic</option>
+            <option value="automechanic">Auto mechanic</option>
+            <option value="carwash">Car wash</option>
             <option value="chief">Chief</option>
-            <option value="cloths washer">Cloths washer</option>
-            <option value="garden cleaner">Garden cleaner</option>
-            <option value="glass cleaner">Glass cleaner</option>
-            <option value="kids caretaker">Kids caretaker</option>
-            <option value="old people caretaker">Old people caretaker</option>
-            <option value="makeup artest">Makeup artest</option>
+            <option value="clothswasher">Cloths washer</option>
+            <option value="gardencleaner">Garden cleaner</option>
+            <option value="glasscleaner">Glass cleaner</option>
+            <option value="kidscaretaker">Kids caretaker</option>
+            <option value="oldpeoplecaretaker">Old people caretaker</option>
+            <option value="makeupartest">Makeup artest</option>
             <option value="photographer">Photographer</option>
             <option value="cattering">Catering</option>
             <option value="washing dishes">washing dishes</option>
@@ -223,14 +229,14 @@ function AddWorkForm() {
           </div>
         )}
 
-        {role === 'car mechanic' && (
+        {role === 'carmechanic' && (
           <div className='mb-5'>
             <label htmlFor='cartype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Car Type</label>
             <select value={cartype} onChange={(e) => setCartype(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
               <option value="">Select</option>
-              <option value="maruthi suzuki">Maruthi suzuki</option>
+              <option value="maruthisuzuki">Maruthi suzuki</option>
               <option value="hundai">Hundai</option>
-              <option value="tata moters">TaTa moters</option>
+              <option value="tatamoters">TaTa moters</option>
               <option value="mahindra">Mahindra</option>
               <option value="honda">Honda</option>
               <option value="toyota">Toyota</option>
@@ -242,7 +248,7 @@ function AddWorkForm() {
           </div>
         )}
 
-        {role === 'bike mechanic' && (
+        {role === 'bikemechanic' && (
           <div className='mb-5'>
             <label htmlFor='biketype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Bike Type</label>
             <select value={biketype} onChange={(e) => setBiketype(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
@@ -257,7 +263,7 @@ function AddWorkForm() {
           </div>
         )}
 
-        {role === 'auto mechanic' && (
+        {role === 'automechanic' && (
           <div className='mb-5'>
             <label htmlFor='autotype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Auto Type</label>
             <select value={autotype} onChange={(e) => setAutotype(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
