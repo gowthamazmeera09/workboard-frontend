@@ -7,8 +7,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Sigup from './pages/Sigup';
-import Sigin from './pages/Sigin';
+
 import VerificationPage from './pages/VerificationPage';
 import LandingHome from './pages/LandingHome';
 import Profile from './pages/Profile';
@@ -21,6 +20,8 @@ import Footer from './components/Footer';
 import AddWorkForm from './pages/AddWorkForm';
 import Totalworks from './pages/Totalworks';
 import Buttons from './pages/Buttons'
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 
 const router = createBrowserRouter([
@@ -65,12 +66,12 @@ const router = createBrowserRouter([
         element:<Totalworks />
       },
       {
-        path:"/Sigup",
-        element:<Sigup />
+        path:"/Signup",
+        element:<Signup />
       },
       {
-        path:"/Sigin",
-        element:<Sigin />
+        path:"/Login",
+        element:<Login />
       },
       {
         path:"/Verificationpage",

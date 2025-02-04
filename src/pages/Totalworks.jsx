@@ -128,7 +128,7 @@ function Totalworks() {
   }, []);
 
   return (
-    <div className="p-4">
+    <div className="p-4 lg:mt-80">
       {isAddingImages && <LoadingSpinner />}
       {isDeletingWork && <LoadingSpinner />}
       {isDeletingImage && <LoadingSpinner />}

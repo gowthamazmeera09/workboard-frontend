@@ -77,7 +77,7 @@ function AddWorkForm() {
       const data = await response.json();
       if (response.ok) {
         setSuccess("Work added successfully!");
-        navigate('/');
+        navigate('/Home');
       } else {
         // Check for specific error message
         if (data.message === 403) {

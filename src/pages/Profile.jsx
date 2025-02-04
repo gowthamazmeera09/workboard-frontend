@@ -28,8 +28,6 @@ const Profile = () => {
         <div className="text-gray-600">No profile picture available</div>
       )}
 
-      <Logout /> {/* This component handles logout functionality */}
-
       {/* Modal for displaying the avatar */}
       {showModal && (
         <div
