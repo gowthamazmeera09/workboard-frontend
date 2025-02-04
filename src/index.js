@@ -11,10 +11,7 @@ import {
 import VerificationPage from './pages/VerificationPage';
 import LandingHome from './pages/LandingHome';
 import Profile from './pages/Profile';
-import Logout from './pages/Logout';
 import Home from './pages/Home';
-import About from './pages/About';
-import Services from './pages/Services';
 import Contact from './pages/Contact';
 import Footer from './components/Footer';
 import AddWorkForm from './pages/AddWorkForm';
@@ -22,6 +19,7 @@ import Totalworks from './pages/Totalworks';
 import Buttons from './pages/Buttons'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Help from './pages/Help';
 
 
 const router = createBrowserRouter([
@@ -44,14 +42,6 @@ const router = createBrowserRouter([
       {
         path:"/Footer",
         element:<Footer />
-      },
-      {
-        path:"/About",
-        element:<About />
-      },
-      {
-        path:"/Services",
-        element:<Services />
       },
       {
         path:"/Contact",
@@ -81,12 +71,13 @@ const router = createBrowserRouter([
         path:"/Profile",
         element:<Profile />,
         children:[
-          {
-            path:"/Profile/Logout",
-            element:<Logout />
-          }
+
         ]
-      }
+      },
+      {
+        path:"/Help",
+        element:<Help />
+      },
     ]
   }
 ])

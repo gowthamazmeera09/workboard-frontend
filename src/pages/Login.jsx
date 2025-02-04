@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { API_URL } from '../data/data';
 import LoadingSpinner from './LoadingSpinner';
@@ -25,8 +25,6 @@ function Login() {
             const data = await response.json();
 
             if (response.ok) {
-
-
                 // Save login details in localStorage
                 localStorage.setItem('loginToken', data.token);
                 localStorage.setItem('userId', data.userId);
@@ -55,11 +53,9 @@ function Login() {
     const userId = localStorage.getItem('userId');
     useEffect(()=>{
         if(userId){
-            
+            // Handle any behavior when the user is already logged in
         }
-    })
-
-
+    });
 
     return (
         <div>
@@ -101,9 +97,9 @@ function Login() {
                                     Password
                                 </label>
                                 <div className="text-sm">
-                                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                                    <Link to="/forgot-password" className="font-semibold text-indigo-600 hover:text-indigo-500">
                                         Forgot password?
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="mt-2">
@@ -141,7 +137,7 @@ function Login() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Login;

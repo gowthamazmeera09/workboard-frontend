@@ -75,6 +75,15 @@ function AddWorkForm() {
       });
 
       const data = await response.json();
+
+      if (response.status === 401) {
+        // Token expired, redirect to login page
+        alert("Session expired. Please log in again.");
+        localStorage.removeItem("loginToken"); // Clear token
+        localStorage.removeItem("userId");
+        navigate("/login"); // Redirect to login page
+        return;
+      }
       if (response.ok) {
         setSuccess("Work added successfully!");
         navigate('/Home');

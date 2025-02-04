@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiMenu, FiX, FiHome, FiPhone, FiPeople } from 'react-icons/fi';
-import { IoIosPeople } from "react-icons/io";
+import { FaBell, FaHeadset } from 'react-icons/fa';
 
 const Navbar = () => {
   const [avatar, setAvatar] = useState('');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const menuRef = useRef(null);
   const profileRef = useRef(null);
@@ -18,18 +16,12 @@ const Navbar = () => {
     }
   }, []);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
   };
 
   const handleClickOutside = (event) => {
-    if (menuRef.current && !menuRef.current.contains(event.target)) {
-      setIsMenuOpen(false);
-    }
     if (profileRef.current && !profileRef.current.contains(event.target)) {
       setIsProfileOpen(false);
     }
@@ -62,6 +54,8 @@ const Navbar = () => {
           </div>
         </div>
 
+        
+
         <div ref={profileRef} className="relative">
           <button
             onClick={toggleProfile}
@@ -86,6 +80,13 @@ const Navbar = () => {
                 onClick={() => setIsProfileOpen(false)}
               >
                 Profile
+              </Link>
+              <Link
+                to="/Help"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                onClick={() => setIsProfileOpen(false)}
+              >
+                Help
               </Link>
               <Link
                 to="/settings"

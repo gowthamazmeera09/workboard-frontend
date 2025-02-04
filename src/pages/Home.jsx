@@ -45,7 +45,7 @@ function Home() {
         )}
       </div>
       {/* Scrollable Content */}
-      <div className="mt-[400px] lg:m-[50px] bg-white border border-gray-400 rounded-3xl  relative z-20">
+      <div className="mt-[400px] lg:m-[350px] bg-white border border-gray-400 rounded-3xl  relative z-20">
         <div>
           <hr className='h-1 w-20 bg-gray-500 mx-auto mt-6' />
         </div>

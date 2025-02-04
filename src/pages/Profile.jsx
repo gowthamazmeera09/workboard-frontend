@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Logout from './Logout'; // Assuming you have a Logout component
 
 const Profile = () => {
   const [avatar, setAvatar] = useState("");
