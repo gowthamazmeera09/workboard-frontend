@@ -23,6 +23,7 @@ function AddWorkForm() {
   const [loading, setLoading] = useState(false); // New state for loading
   const navigate = useNavigate();
   const locationState = useLocation().state;
+  const [avatar, setAvatar] = useState('');
 
   useEffect(() => {
     // Set default role if passed from Buttons component
@@ -81,6 +82,8 @@ function AddWorkForm() {
         alert("Session expired. Please log in again.");
         localStorage.removeItem("loginToken"); // Clear token
         localStorage.removeItem("userId");
+        localStorage.removeItem('imageUrl');
+        setAvatar('');
         navigate("/login"); // Redirect to login page
         return;
       }

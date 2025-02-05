@@ -68,6 +68,16 @@ function Totalworks() {
       alert("Images added successfully");
       getalldata(); // Refresh the data after adding images
     } catch (error) {
+
+      if(error.response && error.response.status === 401){
+        alert("Session expired. Please log in again.");
+        localStorage.removeItem("loginToken"); 
+        localStorage.removeItem("userId");
+        localStorage.removeItem('imageUrl');
+        setAvatar('');
+        navigate('/Login')
+      }
+      
       console.error(error);
       alert("Failed to add images");
     } finally {
@@ -86,6 +96,14 @@ function Totalworks() {
       alert("Work deleted successfully");
       getalldata(); // Refresh data after work deletion
     } catch (error) {
+      if(error.response && error.response.status === 401){
+        alert("Session expired. Please log in again.");
+        localStorage.removeItem("loginToken"); 
+        localStorage.removeItem("userId");
+        localStorage.removeItem('imageUrl');
+        setAvatar('');
+        navigate('/Login')
+      }
       console.error(error);
       alert("Error deleting the work");
     } finally {
@@ -109,6 +127,16 @@ function Totalworks() {
       alert("Image deleted successfully");
       getalldata(); // Refresh data after deleting the image
     } catch (error) {
+
+      if(error.response && error.response.status === 401){
+        alert("Session expired. Please log in again.");
+        localStorage.removeItem("loginToken"); 
+        localStorage.removeItem("userId");
+        localStorage.removeItem('imageUrl');
+        setAvatar('');
+        navigate('/Login')
+      }
+
       console.error(error);
       alert("Failed to delete image");
     } finally {
