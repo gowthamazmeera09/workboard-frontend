@@ -97,7 +97,7 @@ function Login() {
                                     Password
                                 </label>
                                 <div className="text-sm">
-                                    <Link to="/reset-password-directlly" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                                    <Link to="/requestpasswordreset" className="font-semibold text-indigo-600 hover:text-indigo-500">
                                         Forgot password?
                                     </Link>
                                 </div>

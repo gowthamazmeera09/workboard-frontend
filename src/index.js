@@ -21,6 +21,9 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Help from './pages/Help';
 import ResetPasswordDirect from './pages/ResetPasswordDirect';
+import RequestPasswordReset from './pages/RequestPasswordReset';
+import VerifyOTP from './pages/VerifyOTP';
+import ResetPassword from './pages/ResetPassword';
 
 
 const router = createBrowserRouter([
@@ -79,11 +82,23 @@ const router = createBrowserRouter([
         path:"/Help",
         element:<Help />
       },
+      // {
+      //   path:"/reset-password-directlly",
+      //   element:<ResetPasswordDirect />
+      // }
       {
-        path:"/reset-password-directlly",
-        element:<ResetPasswordDirect />
-        
+        path:"/requestpasswordreset",
+        element:<RequestPasswordReset />
+      },
+      {
+        path:"/verify-otp",
+        element:<VerifyOTP />
+      },
+      {
+        path:"/reset-password",
+        element:<ResetPassword />
       }
+
     ]
   }
 ])
