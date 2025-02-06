@@ -20,6 +20,7 @@ import Buttons from './pages/Buttons'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Help from './pages/Help';
+import ResetPasswordDirect from './pages/ResetPasswordDirect';
 
 
 const router = createBrowserRouter([
@@ -78,6 +79,11 @@ const router = createBrowserRouter([
         path:"/Help",
         element:<Help />
       },
+      {
+        path:"/reset-password-directlly",
+        element:<ResetPasswordDirect />
+        
+      }
     ]
   }
 ])
