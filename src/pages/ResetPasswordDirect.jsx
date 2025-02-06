@@ -22,7 +22,7 @@ function ResetPasswordDirect() {
             if (response.ok) {
                 setMessage(data.success);
                 setError("");
-                setTimeout(() => navigate("/Login"), 3000);
+                setTimeout(() => navigate("/Login"), 1000);
             } else {
                 setError(data.error);
                 setMessage("");
