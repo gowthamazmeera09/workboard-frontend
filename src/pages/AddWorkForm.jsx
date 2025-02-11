@@ -107,7 +107,7 @@ function AddWorkForm() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col pr-20 pl-20 lg:mt-[-400px]">
+    <div className="min-h-screen flex flex-col pr-20 pl-20">
       {loading && <LoadingSpinner />} {/* Show loading spinner if loading is true */}
       <form className="max-w-sm mx-auto mt-24" onSubmit={handleSubmit}>
         <div className='mb-5'>

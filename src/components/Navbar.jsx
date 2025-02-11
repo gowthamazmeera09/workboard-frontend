@@ -5,7 +5,6 @@ import { FaBell, FaHeadset } from 'react-icons/fa';
 const Navbar = () => {
   const [avatar, setAvatar] = useState('');
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const menuRef = useRef(null);
   const profileRef = useRef(null);
   const navigate = useNavigate();
 
@@ -15,7 +14,6 @@ const Navbar = () => {
       setAvatar(storedProfilePicture);
     }
   }, []);
-
 
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
@@ -44,68 +42,62 @@ const Navbar = () => {
   };
 
   return (
-    <>
-      <nav className="bg-slate-500 p-4 flex items-center justify-between bg-sticky">
-        <div className="flex items-center">
-          
-
-          <div className="text-white text-xl font-bold ml-4">
-            WorkBoard
-          </div>
+    <nav className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 flex items-center justify-between shadow-lg sticky top-0 z-50">
+      <div className="flex items-center">
+        <div className="text-white text-2xl font-bold ml-4 tracking-wide">
+          WorkBoard
         </div>
+      </div>
 
-        
-
-        <div ref={profileRef} className="relative">
-          <button
-            onClick={toggleProfile}
-            className="text-white flex items-center focus:outline-none"
-          >
-            {avatar ? (
-              <img src={avatar} alt="Profile" className="h-10 w-10 object-cover rounded-full" />
-            ) : (
-              <span className="text-sm">
-                <Link to="/Signup" className="text-white dark:text-blue-500 hover:underline mr-2">Signup</Link>
-                /
-                <Link to="/Login" className="text-white dark:text-blue-500 hover:underline ml-2">Login</Link>
-              </span>
-            )}
-          </button>
-
-          {avatar && isProfileOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
-              <Link
-                to="/profile"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                onClick={() => setIsProfileOpen(false)}
-              >
-                Profile
-              </Link>
-              <Link
-                to="/Help"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                onClick={() => setIsProfileOpen(false)}
-              >
-                Help
-              </Link>
-              <Link
-                to="/settings"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                onClick={() => setIsProfileOpen(false)}
-              >
-                Settings
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Logout
-              </button>
-            </div>
+      <div ref={profileRef} className="relative">
+        <button
+          onClick={toggleProfile}
+          className="text-white flex items-center focus:outline-none"
+        >
+          {avatar ? (
+            <img src={avatar} alt="Profile" className="h-10 w-10 object-cover rounded-full border-2 border-white shadow-md" />
+          ) : (
+            <span className="text-sm flex space-x-2">
+              <Link to="/Signup" className="text-white hover:text-yellow-300 transition-all">Signup</Link>
+              <span className="text-white">/</span>
+              <Link to="/Login" className="text-white hover:text-yellow-300 transition-all">Login</Link>
+            </span>
           )}
-        </div>
-      </nav>
-    </>
+        </button>
+
+        {avatar && isProfileOpen && (
+          <div className="absolute right-0 mt-2 w-52 bg-white rounded-lg shadow-xl py-2 border border-gray-200">
+            <Link
+              to="/profile"
+              className="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-t-lg"
+              onClick={() => setIsProfileOpen(false)}
+            >
+              Profile
+            </Link>
+            <Link
+              to="/Help"
+              className="block px-4 py-2 text-gray-700 hover:bg-gray-200"
+              onClick={() => setIsProfileOpen(false)}
+            >
+              Help
+            </Link>
+            <Link
+              to="/settings"
+              className="block px-4 py-2 text-gray-700 hover:bg-gray-200"
+              onClick={() => setIsProfileOpen(false)}
+            >
+              Settings
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-100 rounded-b-lg"
+            >
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
+    </nav>
   );
 };
 

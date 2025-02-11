@@ -26,15 +26,13 @@ import makeup from '../images/make up artest 2.jpg';
 import teacher from '../images/ui teacher.jpg';
 import watchman from '../images/ui watchman.jpg';
 import driver from '../images/ui driver.jpg';
-// Monthly Worker List
+
 const monthlyWorks = [
   { role: 'teacher', image: teacher },
   { role: 'watchman', image: watchman },
   { role: 'driver', image: driver },
-  // Add more roles as needed
 ];
 
-// Daily Worker List
 const dailyWorks = [
   { role: 'mason', image: mason },
   { role: 'painter', image: painter },
@@ -63,32 +61,36 @@ const dailyWorks = [
 
 function Buttons() {
   const [workerType, setWorkerType] = useState('daily');
-
   const works = workerType === 'daily' ? dailyWorks : monthlyWorks;
 
   return (
-    <div className="flex flex-col items-center">
-      {/* Worker Type Buttons */}
+    <div className="flex flex-col items-center px-4">
       <div className="flex gap-4 mt-10">
         <button
-          className={`px-4 py-2 rounded ${workerType === 'daily' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          className={`px-6 py-3 rounded-xl text-lg font-semibold transition-all shadow-md ${workerType === 'daily' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
           onClick={() => setWorkerType('daily')}
         >
           Daily Worker
         </button>
         <button
-          className={`px-4 py-2 rounded ${workerType === 'monthly' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          className={`px-6 py-3 rounded-xl text-lg font-semibold transition-all shadow-md ${workerType === 'monthly' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
           onClick={() => setWorkerType('monthly')}
         >
           Monthly Worker
         </button>
       </div>
 
-      {/* Worker List */}
-      <div className="flex flex-wrap gap-10 max-w-[500px] justify-center mt-10 mb-20">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-4xl mt-10 mb-20">
         {works.map((work, index) => (
-          <Link key={index} to="/AddWorkForm" state={{ role: work.role }}>
-            <img src={work.image} width="150px" alt={work.role} />
+          <Link key={index} to="/AddWorkForm" state={{ role: work.role }} className="group relative">
+            <img
+              src={work.image}
+              alt={work.role}
+              className="w-32 h-32 rounded-lg shadow-lg transform transition-all group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-white font-semibold text-lg opacity-0 group-hover:opacity-100 transition-all rounded-lg">
+              {work.role.replace(/([A-Z])/g, ' $1').trim()}
+            </div>
           </Link>
         ))}
       </div>
