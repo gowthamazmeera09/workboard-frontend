@@ -42,7 +42,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 flex items-center justify-between shadow-lg sticky top-0 z-50">
+    <nav className="bg-gradient-to-r from-gray-950 to-indigo-600 p-4 flex items-center justify-between shadow-lg sticky top-0 z-50">
       <div className="flex items-center">
         <div className="text-white text-2xl font-bold ml-4 tracking-wide">
           WorkBoard

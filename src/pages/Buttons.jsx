@@ -67,13 +67,13 @@ function Buttons() {
     <div className="flex flex-col items-center px-4">
       <div className="flex gap-4 mt-10">
         <button
-          className={`px-6 py-3 rounded-xl text-lg font-semibold transition-all shadow-md ${workerType === 'daily' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
+          className={`px-6 py-3 rounded-xl text-lg font-semibold transition-all shadow-md ${workerType === 'daily' ? 'bg-gradient-to-r from-gray-950 to-indigo-600  text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
           onClick={() => setWorkerType('daily')}
         >
           Daily Worker
         </button>
         <button
-          className={`px-6 py-3 rounded-xl text-lg font-semibold transition-all shadow-md ${workerType === 'monthly' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
+          className={`px-6 py-3 rounded-xl text-lg font-semibold transition-all shadow-md ${workerType === 'monthly' ? 'bg-gradient-to-r from-gray-950 to-indigo-600  text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
           onClick={() => setWorkerType('monthly')}
         >
           Monthly Worker
