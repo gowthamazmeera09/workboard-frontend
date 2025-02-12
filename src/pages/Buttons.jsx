@@ -31,6 +31,8 @@ const monthlyWorks = [
   { role: 'teacher', image: teacher },
   { role: 'watchman', image: watchman },
   { role: 'driver', image: driver },
+  { role: 'kidscaretaker', image: kids },
+  { role: 'oldpeoplecaretaker', image: oldpeople },
 ];
 
 const dailyWorks = [
