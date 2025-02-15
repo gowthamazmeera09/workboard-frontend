@@ -84,16 +84,24 @@ function Buttons() {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-4xl mt-10 mb-20">
         {works.map((work, index) => (
-          <Link key={index} to="/AddWorkForm" state={{ role: work.role }} className="group relative">
+          <Link key={index} to="/AddWorkForm" state={{ role: work.role }} className="group flex flex-col items-center">
+          <div className="relative">
             <img
               src={work.image}
               alt={work.role}
               className="w-32 h-32 rounded-lg shadow-lg transform transition-all group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-white font-semibold text-lg opacity-0 group-hover:opacity-100 transition-all rounded-lg">
+            {/* Hover effect text (visible on larger screens) */}
+            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-white font-semibold text-lg opacity-0 group-hover:opacity-100 transition-all rounded-lg hidden sm:flex">
               {work.role.replace(/([A-Z])/g, ' $1').trim()}
             </div>
-          </Link>
+          </div>
+          {/* Name below image (visible only on mobile) */}
+          <p className="mt-2 text-sm font-semibold text-gray-700 sm:hidden">
+            {work.role.replace(/([A-Z])/g, ' $1').trim()}
+          </p>
+        </Link>
+        
         ))}
       </div>
     </div>
