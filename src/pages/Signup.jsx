@@ -251,7 +251,7 @@ function Signup() {
 
                         <div>
                             <label htmlFor="photo" className="block text-sm font-medium text-gray-900">
-                                Create Password
+                                Upload photo
                             </label>
                             <div className="mt-2">
                                 <input
