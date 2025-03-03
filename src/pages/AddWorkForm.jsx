@@ -231,7 +231,7 @@ function AddWorkForm() {
 
         {role === 'welder' && (
           <div className='mb-5'>
-            <label htmlFor='weldingtype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Marble Type</label>
+            <label htmlFor='weldingtype' className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Welding Type</label>
             <select value={weldingtype} onChange={(e) => setWeldingType(e.target.value)} className="bg-gray-50 border h-10 border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5">
               <option value="">Select</option>
               <option value="fabrication">fabrication</option>
