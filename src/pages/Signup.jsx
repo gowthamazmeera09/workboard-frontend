@@ -43,11 +43,52 @@ function Signup() {
       };
       
 
+    const validateEmail = (email) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
+    const validatePhoneNumber = (phone) => {
+        return /^\d{10}$/.test(phone);
+    };
+
+    const validatePassword = (password) => {
+        return password.length >= 6;
+    };
+
     const handlesubmit = async (e) => {
         e.preventDefault();
+        setError('');
+        setSuccess('');
+
+        // Validation checks
+        if (!username || username.length < 3) {
+            setError('Username must be at least 3 characters long.');
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            setError('Please enter a valid email address.');
+            return;
+        }
+
+        if (!validatePhoneNumber(phonenumber)) {
+            setError('Please enter a valid 10-digit phone number.');
+            return;
+        }
+
+        if (!validatePassword(password)) {
+            setError('Password must be at least 6 characters long.');
+            return;
+        }
 
         if (!file) {
             setError('Please upload a photo.');
+            return;
+        }
+
+        // Check file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            setError('Photo size should be less than 5MB.');
             return;
         }
 
@@ -56,10 +97,9 @@ function Signup() {
             return;
         }
 
-
         const formData = new FormData();
-        formData.append('username', username);
-        formData.append('email', email);
+        formData.append('username', username.trim());
+        formData.append('email', email.trim());
         formData.append('password', password);
         formData.append('phonenumber', phonenumber);
         formData.append('photo', file);
@@ -71,10 +111,18 @@ function Signup() {
             const response = await fetch(`${API_URL}user/register`, {
                 method: 'POST',
                 body: formData,
+                headers: {
+                    'Accept': 'application/json',
+                },
             });
 
-            const data = await response.json();
-
+            let data;
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                data = await response.json();
+            } else {
+                throw new Error("Server response was not JSON");
+            }
 
             if (response.ok) {
                 setSuccess('Registration successful! Please verify your email.');
@@ -82,11 +130,17 @@ function Signup() {
                     navigate('/Verificationpage');
                 }, 500);
             } else {
-                alert(data.error || "Something went wrong");
+                setError(data.error || "Registration failed. Please try again.");
             }
         } catch (error) {
             console.error("Signup error:", error);
-            alert("Network error. Please check your connection.");
+            if (!navigator.onLine) {
+                setError("You appear to be offline. Please check your internet connection.");
+            } else if (error instanceof TypeError && error.message === "Failed to fetch") {
+                setError("Unable to connect to the server. The server might be temporarily down or you might have connection issues.");
+            } else {
+                setError("An unexpected error occurred. Please try again later.");
+            }
         } finally {
             setLoading(false);
         }
