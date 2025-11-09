@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FaBell, FaHeadset } from 'react-icons/fa';
 
 const Navbar = () => {
   const [avatar, setAvatar] = useState('');
@@ -54,11 +55,7 @@ const Navbar = () => {
           className="text-white flex items-center focus:outline-none"
         >
           {avatar ? (
-            <img
-              src={avatar}
-              alt=""
-              className="h-10 w-10 object-cover rounded-full border-2 border-white shadow-md"
-            />
+            <img src={avatar} alt="Profile" className="h-10 w-10 object-cover rounded-full border-2 border-white shadow-md" />
           ) : (
             <span className="text-sm flex space-x-2">
               <Link to="/Signup" className="text-white hover:text-yellow-300 transition-all">Signup</Link>

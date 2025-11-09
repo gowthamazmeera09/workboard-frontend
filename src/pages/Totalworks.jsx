@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../data/data";
@@ -12,10 +12,12 @@ function Totalworks() {
   const [isAddingImages, setIsAddingImages] = useState(false);
   const [isDeletingWork, setIsDeletingWork] = useState(false);
   const [isDeletingImage, setIsDeletingImage] = useState(false);
-
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const getalldata = useCallback(async () => {
+  // Fetch all user data
+  const getalldata = async () => {
     try {
       const Token = localStorage.getItem("loginToken");
       const userId = localStorage.getItem("userId");
@@ -27,23 +29,25 @@ function Totalworks() {
       }
 
       const response = await axios.get(`${API_URL}user/single-user/${userId}`, {
-        headers: { token: `${Token}` },
+        headers: {
+          token: `${Token}`,
+        },
       });
-
       setUserData(response.data);
     } catch (error) {
       console.error(error);
       alert("Failed to get user data");
     }
-  }, [navigate]);
+  };
 
+  // Handle new image selection
   const handleImageChange = (e) => {
     setNewImages(e.target.files);
   };
 
+  // Upload new images to an existing work entry
   const handleAddImages = async (workId) => {
     setIsAddingImages(true);
-
     const formData = new FormData();
     for (let i = 0; i < newImages.length; i++) {
       formData.append("photos", newImages[i]);
@@ -51,14 +55,16 @@ function Totalworks() {
 
     try {
       const Token = localStorage.getItem("loginToken");
-
-      await axios.post(`${API_URL}work/addimages/${workId}`, formData, {
-        headers: {
-          token: `${Token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
+      await axios.post(
+        `${API_URL}work/addimages/${workId}`,
+        formData,
+        {
+          headers: {
+            token: `${Token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       alert("Images added successfully");
       getalldata();
     } catch (error) {
@@ -69,16 +75,14 @@ function Totalworks() {
     }
   };
 
+  // Delete a work entry
   const handleDeleteWork = async (workId) => {
     setIsDeletingWork(true);
-
     try {
       const Token = localStorage.getItem("loginToken");
-
       await axios.delete(`${API_URL}work/deletework/${workId}`, {
         headers: { token: `${Token}` },
       });
-
       alert("Work deleted successfully");
       getalldata();
     } catch (error) {
@@ -89,20 +93,19 @@ function Totalworks() {
     }
   };
 
+  // Delete a single image from a work
   const handleDeleteImage = async (workId, image) => {
     setIsDeletingImage(true);
-
     const publicId = image.split("/").pop().split(".")[0];
-
     try {
       const Token = localStorage.getItem("loginToken");
-
       await axios.post(
         `${API_URL}work/deleteimage`,
         { workId, publicId },
-        { headers: { token: `${Token}` } }
+        {
+          headers: { token: `${Token}` },
+        }
       );
-
       alert("Image deleted successfully");
       getalldata();
     } catch (error) {
@@ -115,7 +118,7 @@ function Totalworks() {
 
   useEffect(() => {
     getalldata();
-  }, [getalldata]);
+  }, []);
 
   useEffect(() => {
     const storedProfilePicture = localStorage.getItem("imageUrl");
@@ -129,7 +132,8 @@ function Totalworks() {
       {isAddingImages && <LoadingSpinner />}
       {isDeletingWork && <LoadingSpinner />}
       {isDeletingImage && <LoadingSpinner />}
-
+      {loading && <LoadingSpinner />}
+      
       <h1 className="text-3xl font-semibold text-center text-gray-800 mb-8">
         My Added Work Details
       </h1>
@@ -141,14 +145,13 @@ function Totalworks() {
               <div className="flex items-center mb-4">
                 <img
                   src={avatar}
-                  alt="User profile"
+                  alt="User Profile"
                   className="w-16 h-16 object-cover rounded-full border-2 border-gray-300"
                 />
                 <div className="ml-4">
                   <h2 className="text-xl font-bold text-gray-700">{work.role}</h2>
                 </div>
               </div>
-
               <div className="space-y-2 mb-4 text-gray-700">
                 <p><strong>Experience:</strong> {work.experience} years</p>
                 {work.standard && <p><strong>Standard:</strong> {work.standard}</p>}
@@ -171,7 +174,7 @@ function Totalworks() {
                         src={image}
                         alt={`work-${imgIndex}`}
                         className="w-20 h-20 object-cover rounded-lg cursor-pointer"
-                        onClick={() => setSelectedImage(image)}
+                        onClick={() => setSelectedImage(image)} 
                       />
                       <button
                         className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
@@ -201,7 +204,6 @@ function Totalworks() {
                 >
                   {isAddingImages ? "Adding..." : "Add Images"}
                 </button>
-
                 <button
                   className="bg-red-600 text-white px-6 py-2 rounded-lg w-full hover:bg-red-700 disabled:opacity-50"
                   onClick={() => handleDeleteWork(work._id)}
@@ -220,12 +222,12 @@ function Totalworks() {
       {selectedImage && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-          onClick={() => setSelectedImage(null)}
+          onClick={() => setSelectedImage(null)} 
         >
           <div className="bg-white p-6 rounded-lg shadow-xl">
             <img
               src={selectedImage}
-              alt="Selected work"
+              alt="Selected Work"
               className="max-w-full max-h-screen"
             />
           </div>
