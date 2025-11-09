@@ -7,16 +7,17 @@ import LoadingSpinner from './LoadingSpinner';
 function AddWorkForm() {
   const [role, setRole] = useState("");
   const [experience, setExperience] = useState("");
-  const [standard, setStandard] = useState("");
-  const [subject, setSubject] = useState("");
-  const [vehicletype, setVehicleType] = useState("");
-  const [paintertype, setPainterType] = useState("");
-  const [weldingtype, setWeldingType] = useState("");
-  const [marbultype, setMarbulType] = useState("");
-  const [cartype, setCartype] = useState("");
-  const [biketype, setBiketype] = useState("");
-  const [autotype, setAutotype] = useState("");
-  const [shoottype, setShoottype] = useState("");
+  // TODO: These form fields are currently unused but may be needed for future development
+  // const [standard, setStandard] = useState("");
+  // const [subject, setSubject] = useState("");
+  // const [vehicletype, setVehicleType] = useState("");
+  // const [paintertype, setPainterType] = useState("");
+  // const [weldingtype, setWeldingType] = useState("");
+  // const [marbultype, setMarbulType] = useState("");
+  // const [cartype, setCartype] = useState("");
+  // const [biketype, setBiketype] = useState("");
+  // const [autotype, setAutotype] = useState("");
+  // const [shoottype, setShoottype] = useState("");
   const [files, setFiles] = useState([]);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');

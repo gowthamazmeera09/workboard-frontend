@@ -56,7 +56,7 @@ const Navbar = () => {
           {avatar ? (
             <img
               src={avatar}
-              alt="Profile picture"
+              alt=""
               className="h-10 w-10 object-cover rounded-full border-2 border-white shadow-md"
             />
           ) : (
