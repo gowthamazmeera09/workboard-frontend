@@ -16,82 +16,92 @@ import Contact from './pages/Contact';
 import Footer from './components/Footer';
 import AddWorkForm from './pages/AddWorkForm';
 import Totalworks from './pages/Totalworks';
-import Buttons from './pages/Buttons';
+import Buttons from './pages/Buttons'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Help from './pages/Help';
+import ResetPasswordDirect from './pages/ResetPasswordDirect';
 import RequestPasswordReset from './pages/RequestPasswordReset';
 import VerifyOTP from './pages/VerifyOTP';
 import ResetPassword from './pages/ResetPassword';
 
+
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
-    children: [
+    path:"/",
+    element:<App />,
+    children:[
       {
-        path: "/",
-        element: <LandingHome />
+        path:"/",
+        element:<LandingHome />
       },
       {
-        path: "/Home",
-        element: <Home />
+        path:"/Home",
+        element:<Home />
       },
       {
-        path: "/Buttons",
-        element: <Buttons />
+        path:"/Buttons",
+        element:<Buttons />
       },
       {
-        path: "/Footer",
-        element: <Footer />
+        path:"/Footer",
+        element:<Footer />
       },
       {
-        path: "/Contact",
-        element: <Contact />
+        path:"/Contact",
+        element:<Contact />
       },
       {
-        path: "/AddWorkForm",
-        element: <AddWorkForm />
+        path:"/AddWorkForm",
+        element:<AddWorkForm />
       },
       {
-        path: "/Totalworks",
-        element: <Totalworks />
+        path:"/Totalworks",
+        element:<Totalworks />
       },
       {
-        path: "/Signup",
-        element: <Signup />
+        path:"/Signup",
+        element:<Signup />
       },
       {
-        path: "/Login",
-        element: <Login />
+        path:"/Login",
+        element:<Login />
       },
       {
-        path: "/Verificationpage",
-        element: <VerificationPage />
+        path:"/Verificationpage",
+        element:<VerificationPage />
       },
       {
-        path: "/Profile",
-        element: <Profile />
+        path:"/Profile",
+        element:<Profile />,
+        children:[
+
+        ]
       },
       {
-        path: "/Help",
-        element: <Help />
+        path:"/Help",
+        element:<Help />
+      },
+      // {
+      //   path:"/reset-password-directlly",
+      //   element:<ResetPasswordDirect />
+      // }
+      {
+        path:"/requestpasswordreset",
+        element:<RequestPasswordReset />
       },
       {
-        path: "/requestpasswordreset",
-        element: <RequestPasswordReset />
+        path:"/verify-otp",
+        element:<VerifyOTP />
       },
       {
-        path: "/verify-otp",
-        element: <VerifyOTP />
-      },
-      {
-        path: "/reset-password",
-        element: <ResetPassword />
+        path:"/reset-password",
+        element:<ResetPassword />
       }
+
     ]
   }
-]);
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -102,4 +112,7 @@ root.render(
   </React.StrictMode>
 );
 
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
