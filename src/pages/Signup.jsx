@@ -43,115 +43,38 @@ function Signup() {
       };
       
 
-    const validateEmail = (email) => {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    };
-
-    const validatePhoneNumber = (phone) => {
-        return /^\d{10}$/.test(phone);
-    };
-
-    const validatePassword = (password) => {
-        return password.length >= 6;
-    };
-
-    const validateFile = (file) => {
-        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-        return allowedTypes.includes(file.type);
-    };
-
     const handlesubmit = async (e) => {
         e.preventDefault();
-        setError('');
-        setSuccess('');
+
+        if (!file) {
+            setError('Please upload a photo.');
+            return;
+        }
+
+        if (!location) {
+            setError('Please select or type your location.');
+            return;
+        }
+
+
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('phonenumber', phonenumber);
+        formData.append('photo', file);
+        formData.append('location', JSON.stringify({ lat, lng, address: location }));
+
         setLoading(true);
 
         try {
-            // Validation checks
-            if (!username || username.length < 3) {
-                setError('Username must be at least 3 characters long.');
-                return;
-            }
-
-            if (!validateEmail(email)) {
-                setError('Please enter a valid email address.');
-                return;
-            }
-
-            if (!validatePhoneNumber(phonenumber)) {
-                setError('Please enter a valid 10-digit phone number.');
-                return;
-            }
-
-            if (!validatePassword(password)) {
-                setError('Password must be at least 6 characters long.');
-                return;
-            }
-
-            if (!file) {
-                setError('Please upload a photo.');
-                return;
-            }
-
-            if (!validateFile(file)) {
-                setError('Please upload a valid image file (JPEG, PNG, or JPG).');
-                return;
-            }
-
-            // Check file size (max 5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                setError('Photo size should be less than 5MB.');
-                return;
-            }
-
-            if (!location) {
-                setError('Please select or type your location.');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('username', username.trim());
-            formData.append('email', email.trim());
-            formData.append('password', password);
-            formData.append('phonenumber', phonenumber);
-            formData.append('photo', file);
-            formData.append('location', JSON.stringify({ lat, lng, address: location }));
-
-            console.log('Sending signup request with data:', {
-                username,
-                email,
-                phonenumber,
-                location: { lat, lng, address: location },
-                photoSize: file.size,
-                photoType: file.type
-            });
             const response = await fetch(`${API_URL}user/register`, {
                 method: 'POST',
                 body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                },
-                credentials: 'include'
             });
 
-            let data;
-            try {
-                const contentType = response.headers.get("content-type");
-                if (contentType && contentType.includes("application/json")) {
-                    data = await response.json();
-                } else {
-                    throw new Error("Server response was not in JSON format");
-                }
-            } catch (e) {
-                console.error('Error parsing response:', e);
-                throw new Error("Unable to process server response. Please try again.");
-            }
+            const data = await response.json();
 
-            console.log('Server response:', {
-                status: response.status,
-                statusText: response.statusText,
-                data: data
-            });
 
             if (response.ok) {
                 setSuccess('Registration successful! Please verify your email.');
@@ -159,24 +82,11 @@ function Signup() {
                     navigate('/Verificationpage');
                 }, 500);
             } else {
-                const errorMessage = data.error || data.message || "Registration failed. Please try again.";
-                if (response.status === 500) {
-                    throw new Error(`Server Error: ${errorMessage}`);
-                } else if (response.status === 409) {
-                    setError("This email is already registered. Please use a different email.");
-                } else {
-                    setError(errorMessage);
-                }
+                alert(data.error || "Something went wrong");
             }
         } catch (error) {
             console.error("Signup error:", error);
-            if (!navigator.onLine) {
-                setError("You appear to be offline. Please check your internet connection.");
-            } else if (error instanceof TypeError && error.message === "Failed to fetch") {
-                setError("Unable to connect to the server. Please check your internet connection or try again later.");
-            } else {
-                setError(error.message || "An unexpected error occurred. Please try again later.");
-            }
+            alert("Network error. Please check your connection.");
         } finally {
             setLoading(false);
         }
@@ -341,7 +251,7 @@ function Signup() {
 
                         <div>
                             <label htmlFor="photo" className="block text-sm font-medium text-gray-900">
-                                Upload photo
+                                Create Password
                             </label>
                             <div className="mt-2">
                                 <input
