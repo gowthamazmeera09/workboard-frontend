@@ -27,7 +27,7 @@ function Signup() {
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: GOOGLE_KEY,
+        googleMapsApiKey:AIzaSyDEIxNcqh3HrwRDnWTkyRxK4EAzzcRfRFI,
         libraries: ['places'],
     });
 
