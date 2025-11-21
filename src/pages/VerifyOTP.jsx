@@ -1,60 +1,150 @@
-import { useState } from "react";
-import axios from "axios";
-import { API_URL } from "../data/data";
-import { useNavigate, useLocation } from "react-router-dom";
-import LoadingSpinner from "./LoadingSpinner";
+import React, { useState, useEffect, useRef } from 'react';
+import { API_URL } from '../data/data';
+import { useNavigate, useLocation } from 'react-router-dom';
+import LoadingSpinner from './LoadingSpinner';
 
-const VerifyOTP = () => {
-    const [otp, setOtp] = useState("");
-    const [message, setMessage] = useState("");
-    const [loading, setLoading] = useState(false);  // Loading state
-    const Navigate = useNavigate();
-    const location = useLocation();
-    const email = location.state?.email;
+function VerifyOTP() {
+  const [code, setCode] = useState(new Array(6).fill(""));
+  const [resendTimer, setResendTimer] = useState(30);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true); // Start loading
-        try {
-            const res = await axios.post(`${API_URL}user/verify-otp`, { email, otp });
-            setMessage(res.data.success);
-            if (res.status === 200) {
-                Navigate('/reset-password', { state: { email } });
-            }
-        } catch (error) {
-            setMessage(error.response?.data?.error || "Invalid OTP.");
-        } finally {
-            setLoading(false); // Reset loading state after request
-        }
-    };
+  const inputsRef = useRef([]);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const email = location.state?.email;
 
-    return (
-        <div className="relative">
-            {loading && <LoadingSpinner />} {/* Show spinner while loading */}
-            <div className="flex justify-center items-center h-screen bg-gray-100">
-                <div className="bg-white p-6 rounded-lg shadow-md w-96">
-                    <h2 className="text-2xl font-semibold text-center mb-4">Verify OTP</h2>
-                    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-                        <input
-                            type="text"
-                            placeholder="Enter OTP"
-                            value={otp}
-                            onChange={(e) => setOtp(e.target.value)}
-                            required
-                            className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        />
-                        <button
-                            type="submit"
-                            className="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition"
-                        >
-                            Verify OTP
-                        </button>
-                    </form>
-                    {message && <p className="text-center text-red-500 mt-4">{message}</p>}
-                </div>
-            </div>
+  // Handle input change
+  const handleChange = (e, index) => {
+    const value = e.target.value;
+    if (/^[0-9]?$/.test(value)) {
+      const newCode = [...code];
+      newCode[index] = value;
+      setCode(newCode);
+
+      if (value && index < 5) {
+        inputsRef.current[index + 1]?.focus();
+      }
+
+      if (newCode.every(num => num !== "")) {
+        handleSubmit(newCode.join(""));
+      }
+    }
+  };
+
+  // Backspace movement
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace" && !code[index] && index > 0) {
+      inputsRef.current[index - 1]?.focus();
+    }
+  };
+
+  // Submit OTP
+  const handleSubmit = async (finalCode) => {
+    try {
+      setIsSubmitting(true);
+
+      const response = await fetch(`${API_URL}user/verify-otp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp: finalCode }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("OTP Verified Successfully!");
+        navigate('/reset-password', { state: { email } });
+      } else {
+        alert(data.error || "Invalid OTP");
+      }
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Resend OTP
+  const resendCode = async () => {
+    try {
+      const response = await fetch(`${API_URL}user/request-password-reset`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("New OTP sent successfully!");
+        setResendTimer(30);
+      } else {
+        alert(data.error || "Error resending OTP");
+      }
+    } catch (error) {
+      console.error("Error resending OTP:", error);
+    }
+  };
+
+  // Timer countdown
+  useEffect(() => {
+    if (resendTimer > 0) {
+      const timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [resendTimer]);
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
+      {isSubmitting && <LoadingSpinner />}
+
+      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md text-center">
+        <h2 className="text-2xl font-bold text-gray-700 mb-4">
+          Verify OTP
+        </h2>
+
+        <p className="text-gray-600 mb-6">
+          Enter the 6-digit OTP sent to: <br />
+          <span className="font-semibold text-indigo-600">{email}</span>
+        </p>
+
+        {/* OTP Boxes */}
+        <div className="flex justify-center gap-2 mb-4">
+          {code.map((value, index) => (
+            <input
+              key={index}
+              ref={(el) => (inputsRef.current[index] = el)}
+              type="text"
+              maxLength="1"
+              value={value}
+              onChange={(e) => handleChange(e, index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              className="w-12 h-12 text-center border border-gray-300 rounded-lg 
+                         text-2xl focus:border-indigo-500 focus:ring focus:ring-indigo-300 transition"
+            />
+          ))}
         </div>
-    );
-};
+
+        {/* Verify Button */}
+        <button
+          className="w-full py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 disabled:bg-gray-400 transition"
+          onClick={() => handleSubmit(code.join(""))}
+          disabled={isSubmitting || code.some(num => num === "")}
+        >
+          {isSubmitting ? "Verifying..." : "Verify Code"}
+        </button>
+
+        {/* Resend OTP */}
+        <button
+          className="w-full py-2 mt-4 text-indigo-600 hover:underline disabled:text-gray-400"
+          onClick={resendCode}
+          disabled={resendTimer > 0}
+        >
+          {resendTimer > 0 ? `Resend code in ${resendTimer}s` : "Resend OTP"}
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default VerifyOTP;
