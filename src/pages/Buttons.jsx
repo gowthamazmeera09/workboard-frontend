@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import mason from '../images/ui mason.jpg';
 import painter from '../images/ui painter.jpg';
 import plumber from '../images/ui plumber.jpg';
@@ -63,46 +64,84 @@ const dailyWorks = [
 
 function Buttons() {
   const [workerType, setWorkerType] = useState('daily');
+  const [search, setSearch] = useState('');
+
   const works = workerType === 'daily' ? dailyWorks : monthlyWorks;
+
+  const filteredWorks = works.filter((work) =>
+    work.role.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="flex flex-col items-center px-4">
+      
+      {/* Toggle Buttons */}
       <div className="flex gap-4 mt-10">
         <button
-          className={`px-6 py-3 rounded-xl text-lg font-semibold transition-all shadow-md ${workerType === 'daily' ? 'bg-gradient-to-r from-gray-950 to-indigo-600  text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
+          className={`px-6 py-3 rounded-xl text-lg font-semibold transition-all shadow-md ${
+            workerType === 'daily'
+              ? 'bg-gradient-to-r from-gray-950 to-indigo-600 text-white'
+              : 'bg-gray-200 hover:bg-gray-300'
+          }`}
           onClick={() => setWorkerType('daily')}
         >
           Daily Worker
         </button>
+
         <button
-          className={`px-6 py-3 rounded-xl text-lg font-semibold transition-all shadow-md ${workerType === 'monthly' ? 'bg-gradient-to-r from-gray-950 to-indigo-600  text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
+          className={`px-6 py-3 rounded-xl text-lg font-semibold transition-all shadow-md ${
+            workerType === 'monthly'
+              ? 'bg-gradient-to-r from-gray-950 to-indigo-600 text-white'
+              : 'bg-gray-200 hover:bg-gray-300'
+          }`}
           onClick={() => setWorkerType('monthly')}
         >
           Monthly Worker
         </button>
       </div>
 
+      {/* SEARCH BAR */}
+      <div className="mt-8 w-full max-w-md">
+        <input
+          type="text"
+          placeholder="Search work (ex: mason, teacher, electrician...)"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full px-4 py-3 border rounded-xl shadow bg-gray-100 focus:outline-none text-lg"
+        />
+      </div>
+
+      {/* WORK GRID */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-4xl mt-10 mb-20">
-        {works.map((work, index) => (
-          <Link key={index} to="/AddWorkForm" state={{ role: work.role }} className="group flex flex-col items-center">
-          <div className="relative">
-            <img
-              src={work.image}
-              alt={work.role}
-              className="w-32 h-32 rounded-lg shadow-lg transform transition-all group-hover:scale-105"
-            />
-            {/* Hover effect text (visible on larger screens) */}
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-white font-semibold text-lg opacity-0 group-hover:opacity-100 transition-all rounded-lg hidden sm:flex">
-              {work.role.replace(/([A-Z])/g, ' $1').trim()}
-            </div>
-          </div>
-          {/* Name below image (visible only on mobile) */}
-          <p className="mt-2 text-sm font-semibold text-gray-700 sm:hidden">
-            {work.role.replace(/([A-Z])/g, ' $1').trim()}
+        {filteredWorks.length > 0 ? (
+          filteredWorks.map((work, index) => (
+            <Link
+              key={index}
+              to="/AddWorkForm"
+              state={{ role: work.role }}
+              className="group flex flex-col items-center"
+            >
+              <div className="relative">
+                <img
+                  src={work.image}
+                  alt={work.role}
+                  className="w-32 h-32 rounded-lg shadow-lg transform transition-all group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-white font-semibold text-lg opacity-0 group-hover:opacity-100 transition-all rounded-lg hidden sm:flex">
+                  {work.role.replace(/([A-Z])/g, ' $1').trim()}
+                </div>
+              </div>
+
+              <p className="mt-2 text-sm font-semibold text-gray-700 sm:hidden">
+                {work.role.replace(/([A-Z])/g, ' $1').trim()}
+              </p>
+            </Link>
+          ))
+        ) : (
+          <p className="text-center text-gray-500 col-span-full text-lg">
+            No matching work found
           </p>
-        </Link>
-        
-        ))}
+        )}
       </div>
     </div>
   );
