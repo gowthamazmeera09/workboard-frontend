@@ -1,6 +1,6 @@
 // export const API_URL = "http://localhost:2000/"
 
-export const API_URL = "https://dimension-banner-jane-comply.trycloudflare.com/"
+export const API_URL = "https://albums-immune-respected-mayor.trycloudflare.com/"
 
 
 // export const API_URL = "https://workboard-backend.onrender.com/"
